@@ -16,13 +16,17 @@ namespace FriendsApi.Modules
         public static Link Image = new Link("/image/{slug}");
     }
 
+    /// <summary>
+    /// Representation for a single friend. 
+    /// </summary>
     public class FriendRepresentation : Representation<Friend>
     {
         public FriendRepresentation(Friend content) 
-            : base(content, FriendsLinks.Friend, "friend")
+            : base(content, FriendsLinks.Friend, "frapi:friend")
         {
         }
 
+        // The self link is added automatically
         protected override void AddLinks(IResourceLinkBuilder linkBuilder)
         {
             linkBuilder.AddLink("image", FriendsLinks.Image, prompt: "Image");
@@ -30,13 +34,15 @@ namespace FriendsApi.Modules
         }
     }
 
+    /// <summary>
+    /// A collection of friends
+    /// </summary>
     public class FriendsRepresentation : Representation
     {
-        public FriendsRepresentation() : base(FriendsLinks.Friends, "friends")
+        public FriendsRepresentation() : base(FriendsLinks.Friends, "frapi:friends")
         {
             
         }
-
     }
 
     
@@ -59,7 +65,10 @@ namespace FriendsApi.Modules
                     Blog = "http://codebetter.com/glennblock/"
                 };
 
+                // Create the represenation for a list of friends
                 var friends = new FriendsRepresentation();
+
+                // Create each friend resource and embed them in the list
                 friends.EmbedResource("friend", new FriendRepresentation(friend1));
                 friends.EmbedResource("friend", new FriendRepresentation(friend2));
 
