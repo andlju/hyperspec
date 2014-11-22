@@ -43,7 +43,7 @@ namespace Hyperspec
 
         }
 
-        internal IDictionary<string, IList<IResourceLink>> GetLinks()
+        public IDictionary<string, IList<IResourceLink>> GetLinks()
         {
             var linkBuilder = new ResourceLinkBuilder(Context);
 
@@ -59,12 +59,12 @@ namespace Hyperspec
             builder.AddSelfLink(_self);
         }
 
-        internal IDictionary<string, IList<Representation>> GetEmbedded()
+        public IDictionary<string, IList<Representation>> GetEmbedded()
         {
             return _embeddedResources;
         }
 
-        internal IDictionary<string, IList<IResourceForm>> GetForms()
+        public IDictionary<string, IList<IResourceForm>> GetForms()
         {
             var formsBuilder = new ResourceFormBuilder(Context);
             AddForms(formsBuilder);
@@ -100,7 +100,7 @@ namespace Hyperspec
             yield return this;
         }
 
-        internal virtual IEnumerable<object> GetContent()
+        public virtual IEnumerable<object> GetContent()
         {
             yield return this;
         }
@@ -116,7 +116,7 @@ namespace Hyperspec
 
         protected TContent Content { get; set; }
 
-        internal override IEnumerable<object> GetContent()
+        public override IEnumerable<object> GetContent()
         {
             yield return this;
             yield return Content;

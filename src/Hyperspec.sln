@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsApi", "Samples\Frien
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{CBD14121-9273-4594-8A5A-974506FE979F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperspec.Nancy", "Hyperspec.Nancy\Hyperspec.Nancy.csproj", "{39D1F447-EFE4-498A-B674-67C38D64B3FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperspec.Hal", "Hyperspec.Hal\Hyperspec.Hal.csproj", "{003D61E1-B135-4175-8C0D-771C4EFAF7F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{F3339064-7B7C-4FFC-844E-0349F9FC187F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3339064-7B7C-4FFC-844E-0349F9FC187F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3339064-7B7C-4FFC-844E-0349F9FC187F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D1F447-EFE4-498A-B674-67C38D64B3FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D1F447-EFE4-498A-B674-67C38D64B3FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D1F447-EFE4-498A-B674-67C38D64B3FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D1F447-EFE4-498A-B674-67C38D64B3FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{003D61E1-B135-4175-8C0D-771C4EFAF7F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{003D61E1-B135-4175-8C0D-771C4EFAF7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{003D61E1-B135-4175-8C0D-771C4EFAF7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{003D61E1-B135-4175-8C0D-771C4EFAF7F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

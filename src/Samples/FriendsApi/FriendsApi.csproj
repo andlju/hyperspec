@@ -90,6 +90,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Hyperspec.Nancy\Hyperspec.Nancy.csproj">
+      <Project>{39D1F447-EFE4-498A-B674-67C38D64B3FB}</Project>
+      <Name>Hyperspec.Nancy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Hyperspec\Hyperspec.csproj">
       <Project>{C54A0BC4-1B8A-4410-8F13-8AC1B13B29D2}</Project>
       <Name>Hyperspec</Name>

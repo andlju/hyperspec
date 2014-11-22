@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Hyperspec;
+using Hyperspec.Nancy;
 using Nancy;
 
 namespace FriendsApi.Modules
@@ -22,19 +23,26 @@ namespace FriendsApi.Modules
 
     public class FriendRepresentation : Representation<Friend>
     {
-        public FriendRepresentation(Friend content, string resourceType) 
-            : base(content, FriendsLinks.Friends, resourceType)
+        public FriendRepresentation(Friend content) 
+            : base(content, FriendsLinks.Friends, "friend")
         {
         }
-
-
     }
 
     public class FriendsModule : NancyModule
     {
         public FriendsModule()
         {
-            Get[FriendsLinks.Friends.GetPathTemplate()] = _ => "friends";
+            Get[FriendsLinks.Friends.GetPathTemplate()] = _ =>
+            {
+                var friend = new Friend()
+                {
+                    FullName = "Anders Ljusberg",
+                    Slug = "anderslj",
+                    Blog = "http://coding-insomnia.com"
+                };
+                return new FriendRepresentation(friend);
+            };
         }
     }
 }
