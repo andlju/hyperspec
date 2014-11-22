@@ -95,7 +95,7 @@ namespace Hyperspec
             get { return _self; }
         }
 
-        internal virtual IEnumerable<object> GetLinkContext()
+        public virtual IEnumerable<object> GetLinkContext()
         {
             yield return this;
         }
@@ -122,6 +122,10 @@ namespace Hyperspec
             yield return Content;
         }
 
+        public override IEnumerable<object> GetLinkContext()
+        {
+            yield return this;
+            yield return Content;
+        }
     }
-
 }

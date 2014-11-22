@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="HomeModule.cs" />
+    <Compile Include="Models\Friend.cs" />
     <Compile Include="Modules\FriendsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
