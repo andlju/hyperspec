@@ -50,6 +50,8 @@ namespace FriendsApi.Modules
     {
         public FriendsModule()
         {
+            // Make sure to call with the HTTP header
+            // Accept: application/hal+json
             Get[FriendsLinks.Friends.GetPathTemplate()] = _ =>
             {
                 var friend1 = new Friend()

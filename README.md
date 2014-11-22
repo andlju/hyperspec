@@ -67,3 +67,71 @@ public class FriendsModule : NancyModule
     }
 }
 ```
+
+
+## Output
+```
+GET http://localhost:50248/friends
+Accept: application/hal+json
+```
+
+The above sample should output something similar to this:
+
+```json
+{
+  "_embedded": {
+    "friend": [
+      {
+        "FullName": "Anders Ljusberg",
+        "Blog": "http://coding-insomnia.com",
+        "Slug": "anderslj",
+        "_links": {
+          "self": {
+            "href": "/friends/anderslj"
+          },
+          "profile": {
+            "href": "frapi:friend"
+          },
+          "image": {
+            "href": "/image/anderslj",
+            "title": "Image"
+          },
+          "blog": {
+            "href": "http://coding-insomnia.com",
+            "title": "Blog"
+          }
+        }
+      },
+      {
+        "FullName": "Glenn Block",
+        "Blog": "http://codebetter.com/glennblock/",
+        "Slug": "gblock",
+        "_links": {
+          "self": {
+            "href": "/friends/gblock"
+          },
+          "profile": {
+            "href": "frapi:friend"
+          },
+          "image": {
+            "href": "/image/gblock",
+            "title": "Image"
+          },
+          "blog": {
+            "href": "http://codebetter.com/glennblock/",
+            "title": "Blog"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "/friends"
+    },
+    "profile": {
+      "href": "frapi:friends"
+    }
+  }
+}
+```
