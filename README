@@ -1,0 +1,6 @@
+Hyperspec
+===
+
+This is very much a work-in-progress trying to build a reasonably easy way of creating a hypermedia API in .NET
+
+So far only the combination HAL and Nancy is supported.
