@@ -7,9 +7,11 @@ using Resta.UriTemplates;
 
 namespace Hyperspec
 {  
-    public class ResourceLinkBase
+    /// <summary>
+    /// Common base class for ResourceLink and ResourceForm. 
+    /// </summary>
+    public abstract class ResourceLinkBase : ILink
     {
-
         public class TemplateParameterInfo
         {
             public string Name { get; set; }
@@ -22,7 +24,7 @@ namespace Hyperspec
         private readonly Dictionary<string, TemplateParameterInfo> _parameterInfos;
 
         private readonly UriTemplate _uriTemplate;
-        private UriTemplate _extendedUriTemplate;
+        private readonly UriTemplate _extendedUriTemplate;
 
         protected readonly IEnumerable<object> Resources;
         private readonly string _title;
@@ -63,14 +65,16 @@ namespace Hyperspec
             _extendedUriTemplate = extendedUriBuilder.Build();
         }
 
-        public string Title { get { return _title; } }
+        public virtual string Title { get { return _title; } }
+
+        public abstract string Href { get; }
 
         protected IDictionary<string, TemplateParameterInfo> ParameterInfos
         {
             get { return _parameterInfos; }
         }
 
-        public string GetHref(bool includeExtraParameters)
+        protected string GetHref(bool includeExtraParameters)
         {
             var template = includeExtraParameters ? _extendedUriTemplate : _uriTemplate;
             var linkParts = GetParameters();
@@ -143,11 +147,13 @@ namespace Hyperspec
 
             return val.ToString();
         }
-
-
     }
 
-    public class ResourceLinkBase<TTemplate> : ResourceLinkBase
+    /// <summary>
+    /// A Resource Link with a template. The 
+    /// </summary>
+    /// <typeparam name="TTemplate"></typeparam>
+    public abstract class ResourceLinkBase<TTemplate> : ResourceLinkBase
     {
         public ResourceLinkBase(TemplatedLink templatedLink, IEnumerable<object> resources, string title) : base(templatedLink, resources, title, GetParameterInfos())
         {

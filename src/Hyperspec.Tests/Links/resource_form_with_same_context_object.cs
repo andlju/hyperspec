@@ -5,7 +5,7 @@ namespace Hyperspec.Tests.Links
 {
     public class resource_form_with_same_context_object : TestBase
     {
-        protected IResourceForm ResourceForm;
+        protected IForm ResourceForm;
         protected TemplatedLink TemplatedLink;
 
         protected override void Given()

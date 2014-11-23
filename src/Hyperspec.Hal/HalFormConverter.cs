@@ -10,7 +10,7 @@ namespace Hyperspec.Hal
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var forms = ((IEnumerable<IResourceForm>)value).ToArray();
+            var forms = ((IEnumerable<IForm>)value).ToArray();
             if (forms.Length == 1)
             {
                 serializer.Serialize(writer, forms[0]);
@@ -34,7 +34,7 @@ namespace Hyperspec.Hal
 
         public override bool CanConvert(Type objectType)
         {
-            return (typeof(IEnumerable<IResourceForm>).IsAssignableFrom(objectType));
+            return (typeof(IEnumerable<IForm>).IsAssignableFrom(objectType));
         }
     }
 }

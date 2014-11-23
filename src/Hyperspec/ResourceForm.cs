@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Hyperspec
 {
-    public class ResourceForm<TTemplate> : ResourceLinkBase<TTemplate>, IResourceForm
+    public class ResourceForm<TTemplate> : ResourceLinkBase<TTemplate>, IForm
     {
         private readonly string _method;
 
@@ -12,21 +12,21 @@ namespace Hyperspec
             _method = method;
         }
 
-        public string Href
+        public override string Href
         {
             get { return GetHref(false); }
         }
 
         public string Method { get { return _method; } }
 
-        public IDictionary<string, ParameterInfo> Template
+        public IDictionary<string, FormParameterInfo> Template
         {
             get { return GetTemplate(); }
         }
 
-        private IDictionary<string, ParameterInfo> GetTemplate()
+        private IDictionary<string, FormParameterInfo> GetTemplate()
         {
-            return ParameterInfos.Values.Where(pi => !pi.InTemplate).ToDictionary(pi => pi.Name, pi => new ParameterInfo()
+            return ParameterInfos.Values.Where(pi => !pi.InTemplate).ToDictionary(pi => pi.Name, pi => new FormParameterInfo()
             {
                 Title = pi.Title,
                 Type = pi.Type,
