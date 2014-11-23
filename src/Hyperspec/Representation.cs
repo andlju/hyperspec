@@ -8,15 +8,15 @@ namespace Hyperspec
 {
     public abstract class Representation
     {
-        private readonly Link _self;
-        private readonly string _resourceProfile;
+        private readonly TemplatedLink _self;
+        private readonly string _profileHref;
 
         private readonly IDictionary<string, IList<Representation>> _embeddedResources = new Dictionary<string, IList<Representation>>();
 
-        protected Representation(Link self, string resourceProfile)
+        protected Representation(TemplatedLink self, string profileHref = null)
         {
             _self = self;
-            _resourceProfile = resourceProfile;
+            _profileHref = profileHref;
         }
 
         internal Representation Parent { get; set; }
@@ -33,30 +33,49 @@ namespace Hyperspec
             resourceList.Add(representation);
         }
 
-        protected virtual void AddLinks(IResourceLinkBuilder linkBuilder)
+        protected virtual void AddLinks(ILinkBuilder linkBuilder)
         {
 
         }
 
-        protected virtual void AddForms(IResourceFormBuilder resourceFormBuilder)
+        protected virtual void AddForms(IFormBuilder resourceFormBuilder)
         {
 
         }
 
-        public IDictionary<string, IList<IResourceLink>> GetLinks()
+        public IDictionary<string, IList<ILink>> GetLinks()
         {
-            var linkBuilder = new ResourceLinkBuilder(Context);
+            var linkBuilder = new LinkBuilder(Context);
 
+            // Add common links
             AddSelfLink(linkBuilder);
+            AddProfileLink(linkBuilder);
 
-            linkBuilder.AddProfileLink(_resourceProfile);
             AddLinks(linkBuilder);
             return linkBuilder.Links;
         }
 
-        internal virtual void AddSelfLink(ResourceLinkBuilder builder)
+        /// <summary>
+        /// Add a self-link to the links for this resource
+        /// </summary>
+        /// <remarks>Override this if you want to change the default way of adding self-links.</remarks>
+        /// <param name="builder"></param>
+        protected virtual void AddSelfLink(ILinkBuilder builder)
         {
             builder.AddSelfLink(_self);
+        }
+
+        /// <summary>
+        /// Add a profile link to the links for this resource if a profile has been set.
+        /// </summary>
+        /// <remarks>Override this if you want to change the default way of adding profile-links.</remarks>
+        /// <param name="builder"></param>
+        protected virtual void AddProfileLink(ILinkBuilder builder)
+        {
+            if (!string.IsNullOrEmpty(_profileHref))
+            {
+                builder.AddProfileLink(_profileHref);
+            }
         }
 
         public IDictionary<string, IList<Representation>> GetEmbedded()
@@ -66,7 +85,7 @@ namespace Hyperspec
 
         public IDictionary<string, IList<IResourceForm>> GetForms()
         {
-            var formsBuilder = new ResourceFormBuilder(Context);
+            var formsBuilder = new FormBuilder(Context);
             AddForms(formsBuilder);
             return formsBuilder.Forms;
         }
@@ -90,7 +109,7 @@ namespace Hyperspec
             }
         }
 
-        protected internal Link Self
+        protected internal TemplatedLink Self
         {
             get { return _self; }
         }
@@ -108,7 +127,7 @@ namespace Hyperspec
 
     public abstract class Representation<TContent> : Representation
     {
-        protected Representation(TContent content, Link self, string resourceType)
+        protected Representation(TContent content, TemplatedLink self, string resourceType)
             : base(self, resourceType)
         {
             Content = content;

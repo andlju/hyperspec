@@ -10,10 +10,10 @@ namespace FriendsApi.Modules
 {
     public static class FriendsLinks
     {
-        public static Link Friends = new Link("/friends");
-        public static Link Friend = new Link("/friends/{slug}");
+        public static TemplatedLink Friends = new TemplatedLink("/friends");
+        public static TemplatedLink Friend = new TemplatedLink("/friends/{slug}");
 
-        public static Link Image = new Link("/image/{slug}");
+        public static TemplatedLink Image = new TemplatedLink("/image/{slug}");
     }
 
     /// <summary>
@@ -27,10 +27,10 @@ namespace FriendsApi.Modules
         }
 
         // The self link is added automatically
-        protected override void AddLinks(IResourceLinkBuilder linkBuilder)
+        protected override void AddLinks(ILinkBuilder linkBuilder)
         {
             linkBuilder.AddLink("image", FriendsLinks.Image, prompt: "Image");
-            linkBuilder.AddLink("blog", new Link(Content.Blog), prompt: "Blog");
+            linkBuilder.AddLink("blog", Content.Blog, prompt: "Blog");
         }
     }
 

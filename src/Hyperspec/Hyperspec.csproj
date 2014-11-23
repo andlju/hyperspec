@@ -43,19 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILink.cs" />
     <Compile Include="IResourceForm.cs" />
-    <Compile Include="IResourceFormBuilder.cs" />
+    <Compile Include="IFormBuilder.cs" />
     <Compile Include="IResourceLink.cs" />
-    <Compile Include="IResourceLinkBuilder.cs" />
-    <Compile Include="Link.cs" />
+    <Compile Include="ILinkBuilder.cs" />
+    <Compile Include="StaticLink.cs" />
+    <Compile Include="TemplatedLink.cs" />
     <Compile Include="ProfileLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionHelpers.cs" />
     <Compile Include="Representation.cs" />
     <Compile Include="ResourceForm.cs" />
-    <Compile Include="ResourceFormBuilder.cs" />
+    <Compile Include="FormBuilder.cs" />
     <Compile Include="ResourceLinkBase.cs" />
-    <Compile Include="ResourceLinkBuilder.cs" />
+    <Compile Include="LinkBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

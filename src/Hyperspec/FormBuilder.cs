@@ -3,17 +3,17 @@ using System.Linq;
 
 namespace Hyperspec
 {
-    class ResourceFormBuilder : IResourceFormBuilder
+    class FormBuilder : IFormBuilder
     {
         public IDictionary<string, IList<IResourceForm>> Forms { get; private set; }
         private readonly IEnumerable<object> _contexts;
-        public ResourceFormBuilder(IEnumerable<object> contexts)
+        public FormBuilder(IEnumerable<object> contexts)
         {
             _contexts = contexts;
             Forms = new Dictionary<string, IList<IResourceForm>>();
         }
 
-        public void AddForm<TTemplate>(string formName, Link link, string prompt = null, string method = "POST", object context = null)
+        public void AddForm<TTemplate>(string formName, TemplatedLink templatedLink, string prompt = null, string method = "POST", object context = null)
         {
             IList<IResourceForm> formList;
             if (!Forms.TryGetValue(formName, out formList))
@@ -25,7 +25,7 @@ namespace Hyperspec
             if (context != null)
                 contexts = new[] { context }.Concat(_contexts);
 
-            formList.Add(new ResourceForm<TTemplate>(link, contexts, prompt, method));
+            formList.Add(new ResourceForm<TTemplate>(templatedLink, contexts, prompt, method));
         }
     }
 }

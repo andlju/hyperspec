@@ -3,21 +3,20 @@ using Resta.UriTemplates;
 
 namespace Hyperspec
 {
-    public class Link
+    public class TemplatedLink
     {
-        private UriTemplate _uriTemplate;
+        private readonly UriTemplate _uriTemplate;
 
         /// <summary>
         /// Create a new link
         /// </summary>
         /// <param name="template">The link template in RFC 6570 format</param>
-        public Link(string template)
+        public TemplatedLink(string template)
         {
             _uriTemplate = new UriTemplate(template);
         }
 
-
-        private static Regex _uriSplit = new Regex(@"(?<left>.*)(?<right>\{\?.*)|(?<left>.*)");
+        private static readonly Regex UriSplit = new Regex(@"(?<left>.*)(?<right>\{\?.*)|(?<left>.*)");
 
         /// <summary>
         /// Get the path part of the template. Useful for building routes etc
@@ -25,7 +24,7 @@ namespace Hyperspec
         /// <returns></returns>
         public string GetPathTemplate()
         {
-            var matches = _uriSplit.Match(_uriTemplate.Template);
+            var matches = UriSplit.Match(_uriTemplate.Template);
             return matches.Groups["left"].Value;
         }
 

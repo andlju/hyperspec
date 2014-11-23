@@ -10,7 +10,7 @@ namespace Hyperspec.Hal
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var links = ((IEnumerable<IResourceLink>)value).ToArray();
+            var links = ((IEnumerable<ILink>)value).ToArray();
             if (links.Length == 1)
             {
                 GetLinkObject(links[0], serializer).WriteTo(writer);
@@ -25,7 +25,7 @@ namespace Hyperspec.Hal
             array.WriteTo(writer);
         }
 
-        public JObject GetLinkObject(IResourceLink link, JsonSerializer serializer)
+        public JObject GetLinkObject(ILink link, JsonSerializer serializer)
         {
             var linkObj = JObject.FromObject(link, serializer);
             var templated = linkObj["href"].Value<string>().Contains("{");
@@ -43,7 +43,7 @@ namespace Hyperspec.Hal
 
         public override bool CanConvert(Type objectType)
         {
-            return (typeof(IEnumerable<IResourceLink>).IsAssignableFrom(objectType));
+            return (typeof(IEnumerable<ILink>).IsAssignableFrom(objectType));
         }
     }
 

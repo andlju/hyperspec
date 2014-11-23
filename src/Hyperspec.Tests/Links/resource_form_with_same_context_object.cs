@@ -6,11 +6,11 @@ namespace Hyperspec.Tests.Links
     public class resource_form_with_same_context_object : TestBase
     {
         protected IResourceForm ResourceForm;
-        protected Link Link;
+        protected TemplatedLink TemplatedLink;
 
         protected override void Given()
         {
-            Link = new Link("/test/{testString}/something/{testId}");
+            TemplatedLink = new TemplatedLink("/test/{testString}/something/{testId}");
             var testObj = new MyExtendedTestClass()
             {
                 TestString = "ATestString",
@@ -18,7 +18,7 @@ namespace Hyperspec.Tests.Links
                 ExtraInt = 1337,
                 ExtraString = "AnExtraString"
             };
-            ResourceForm = new ResourceForm<MyExtendedTestClass>(Link, new[] { testObj });
+            ResourceForm = new ResourceForm<MyExtendedTestClass>(TemplatedLink, new[] { testObj });
         }
 
         protected override void When()

@@ -1,6 +1,6 @@
 namespace Hyperspec
 {
-    public class ProfileLink : IResourceLink
+    public class ProfileLink : ILink
     {
         private readonly string _href;
 

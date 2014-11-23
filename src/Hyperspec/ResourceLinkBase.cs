@@ -19,7 +19,7 @@ namespace Hyperspec
             public bool InTemplate { get; set; }
         }
 
-        private readonly Dictionary<string, TemplateParameterInfo> _parameterInfos = new Dictionary<string, TemplateParameterInfo>();
+        private readonly Dictionary<string, TemplateParameterInfo> _parameterInfos;
 
         private readonly UriTemplate _uriTemplate;
         private UriTemplate _extendedUriTemplate;
@@ -27,9 +27,9 @@ namespace Hyperspec
         protected readonly IEnumerable<object> Resources;
         private readonly string _title;
 
-        protected ResourceLinkBase(Link link, IEnumerable<object> resources, string title, IEnumerable<TemplateParameterInfo> parameterInfos = null)
+        protected ResourceLinkBase(TemplatedLink templatedLink, IEnumerable<object> resources, string title, IEnumerable<TemplateParameterInfo> parameterInfos = null)
         {
-            _uriTemplate = _extendedUriTemplate = link.GetTemplate();
+            _uriTemplate = _extendedUriTemplate = templatedLink.GetTemplate();
             _title = title;
 
             Resources = resources;
@@ -149,7 +149,7 @@ namespace Hyperspec
 
     public class ResourceLinkBase<TTemplate> : ResourceLinkBase
     {
-        public ResourceLinkBase(Link link, IEnumerable<object> resources, string title) : base(link, resources, title, GetParameterInfos())
+        public ResourceLinkBase(TemplatedLink templatedLink, IEnumerable<object> resources, string title) : base(templatedLink, resources, title, GetParameterInfos())
         {
 
         }

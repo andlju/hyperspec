@@ -2,16 +2,10 @@ using System.Collections.Generic;
 
 namespace Hyperspec
 {
-    public interface IResourceLink
+    public class ResourceLink<TTemplate> : ResourceLinkBase<TTemplate>, ILink
     {
-        string Href { get; }
-        string Title { get; }
-    }
-
-    public class ResourceLink<TTemplate> : ResourceLinkBase<TTemplate>, IResourceLink
-    {
-        public ResourceLink(Link link, IEnumerable<object> resources, string title = null)
-            : base(link, resources, title)
+        public ResourceLink(TemplatedLink templatedLink, IEnumerable<object> resources, string title = null)
+            : base(templatedLink, resources, title)
         {
         }
 
@@ -22,10 +16,10 @@ namespace Hyperspec
 
     }
 
-    public class ResourceLink : ResourceLinkBase, IResourceLink
+    public class ResourceLink : ResourceLinkBase, ILink
     {
-        public ResourceLink(Link link, IEnumerable<object> resources, string title = null)
-            : base(link, resources, title)
+        public ResourceLink(TemplatedLink templatedLink, IEnumerable<object> resources, string title = null)
+            : base(templatedLink, resources, title)
         {
         }
 

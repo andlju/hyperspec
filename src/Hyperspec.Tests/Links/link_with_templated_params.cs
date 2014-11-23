@@ -5,10 +5,10 @@ namespace Hyperspec.Tests.Links
 {
     public class link_with_templated_params : TestBase
     {
-        protected Link Link;
+        protected TemplatedLink TemplatedLink;
         protected override void Given()
         {
-            Link = new Link("/test/{testString}/something/{testId}");
+            TemplatedLink = new TemplatedLink("/test/{testString}/something/{testId}");
         }
 
         protected override void When()
@@ -19,13 +19,13 @@ namespace Hyperspec.Tests.Links
         [Fact]
         public void then_pathTemplate_is_correct()
         {
-            Assert.Equal("/test/{testString}/something/{testId}", Link.GetPathTemplate());
+            Assert.Equal("/test/{testString}/something/{testId}", TemplatedLink.GetPathTemplate());
         }
 
         [Fact]
         public void then_fullTemplate_is_correct()
         {
-            Assert.Equal("/test/{testString}/something/{testId}", Link.GetTemplate().Template);
+            Assert.Equal("/test/{testString}/something/{testId}", TemplatedLink.GetTemplate().Template);
         }
     }
 
