@@ -14,7 +14,7 @@ namespace Hyperspec
             Forms = new Dictionary<string, IList<IForm>>();
         }
 
-        public void AddForm<TTemplate>(string formName, TemplatedLink templatedLink, string prompt = null, string method = "POST", object context = null)
+        public void AddForm<TTemplate>(string formName, string linkTemplate, string prompt = null, string method = "POST", object context = null)
         {
             IList<IForm> formList;
             if (!Forms.TryGetValue(formName, out formList))
@@ -26,7 +26,7 @@ namespace Hyperspec
             if (context != null)
                 contexts = new[] { context }.Concat(_contexts);
 
-            formList.Add(new ResourceForm<TTemplate>(templatedLink, contexts, prompt, method));
+            formList.Add(new ResourceForm<TTemplate>(linkTemplate, contexts, prompt, method));
         }
     }
 }

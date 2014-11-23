@@ -6,16 +6,16 @@ namespace Hyperspec.Tests.Links
     public class resource_link_with_other_context_object : TestBase
     {
         protected ILink Link;
-        protected TemplatedLink TemplatedLink;
+        protected string LinkTemplate;
         protected override void Given()
         {
-            TemplatedLink = new TemplatedLink("/test/{testString}/something/{testId}{?extraString,extraInt}");
+            LinkTemplate = "/test/{testString}/something/{testId}{?extraString,extraInt}";
             var testObj = new MyTestClass()
             {
                 TestString = "ATestString",
                 TestId = new Guid("8babe164-fa02-47f0-b4e5-92bdc972ff01")
             };
-            Link = new ResourceLink<MyExtendedTestClass>(TemplatedLink, new[] { testObj });
+            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { testObj });
         }
 
         protected override void When()

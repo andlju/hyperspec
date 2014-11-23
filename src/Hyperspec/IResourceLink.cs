@@ -4,8 +4,8 @@ namespace Hyperspec
 {
     public class ResourceLink<TTemplate> : ResourceLinkBase<TTemplate>
     {
-        public ResourceLink(TemplatedLink templatedLink, IEnumerable<object> resources, string title = null)
-            : base(templatedLink, resources, title)
+        public ResourceLink(string linkTemplate, IEnumerable<object> resources, string title = null)
+            : base(linkTemplate, resources, title)
         {
         }
 
@@ -18,8 +18,8 @@ namespace Hyperspec
 
     public class ResourceLink : ResourceLinkBase
     {
-        public ResourceLink(TemplatedLink templatedLink, IEnumerable<object> resources, string title = null)
-            : base(templatedLink, resources, title)
+        public ResourceLink(string linkTemplate, IEnumerable<object> resources, string title = null)
+            : base(linkTemplate, resources, title)
         {
         }
 

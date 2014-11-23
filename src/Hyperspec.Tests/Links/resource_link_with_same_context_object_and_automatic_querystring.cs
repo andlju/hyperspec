@@ -6,10 +6,10 @@ namespace Hyperspec.Tests.Links
     public class resource_link_with_same_context_object_and_automatic_querystring : TestBase
     {
         protected ILink Link;
-        protected TemplatedLink TemplatedLink;
+        protected string LinkTemplate;
         protected override void Given()
         {
-            TemplatedLink = new TemplatedLink("/test/{testString}/something/{testId}{?extraString}");
+            LinkTemplate = "/test/{testString}/something/{testId}{?extraString}";
             var testObj = new MyExtendedTestClass()
             {
                 TestString = "ATestString",
@@ -17,7 +17,7 @@ namespace Hyperspec.Tests.Links
                 ExtraInt = 1337,
                 ExtraString = "AnExtraString"
             };
-            Link = new ResourceLink<MyExtendedTestClass>(TemplatedLink, new[] { testObj });
+            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { testObj });
         }
 
         protected override void When()

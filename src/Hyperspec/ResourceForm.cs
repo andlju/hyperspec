@@ -7,7 +7,7 @@ namespace Hyperspec
     {
         private readonly string _method;
 
-        public ResourceForm(TemplatedLink templatedLink, IEnumerable<object> resources, string title = null, string method = "POST") : base(templatedLink, resources, title)
+        public ResourceForm(string linkTemplate, IEnumerable<object> resources, string title = null, string method = "POST") : base(linkTemplate, resources, title)
         {
             _method = method;
         }

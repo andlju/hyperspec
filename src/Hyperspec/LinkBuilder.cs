@@ -14,40 +14,35 @@ namespace Hyperspec
             Links = new Dictionary<string, IList<ILink>>();
         }
 
-        public void AddLink<TTemplate>(string linkName, TemplatedLink templatedLink, string prompt = null, object context = null)
+        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt = null, object context = null)
         {
             var contexts = _contexts;
             if (context != null)
                 contexts = new[] { context }.Concat(_contexts);
 
-            ILink link = new ResourceLink<TTemplate>(templatedLink, contexts, prompt);
+            ILink link = new ResourceLink<TTemplate>(linkTemplate, contexts, prompt);
 
             AddNamedLink(linkName, link);
         }
 
-        public void AddLink(string linkName, TemplatedLink templatedLink, string prompt = null, object context = null)
+        public void AddLink(string linkName, string linkTemplate, string prompt = null, object context = null)
         {
             var contexts = _contexts;
             if (context != null)
                 contexts = new[] { context }.Concat(_contexts);
-            ILink link = new ResourceLink(templatedLink, contexts, prompt);
+            ILink link = new ResourceLink(linkTemplate, contexts, prompt);
 
             AddNamedLink(linkName, link);
         }
 
-        public void AddLink(string linkName, string href, string prompt = null)
+        public void AddSelfLink<TTemplate>(string linkTemplate)
         {
-            AddNamedLink(linkName, new StaticLink(href, prompt));
+            AddLink<TTemplate>("self", linkTemplate);
         }
 
-        public void AddSelfLink<TTemplate>(TemplatedLink selfTemplatedLink)
+        public void AddSelfLink(string linkTemplate)
         {
-            AddLink<TTemplate>("self", selfTemplatedLink);
-        }
-
-        public void AddSelfLink(TemplatedLink selfTemplatedLink)
-        {
-            AddLink("self", selfTemplatedLink);
+            AddLink("self", linkTemplate);
         }
 
         public void AddProfileLink(string href)

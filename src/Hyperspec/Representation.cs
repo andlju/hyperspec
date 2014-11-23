@@ -8,14 +8,14 @@ namespace Hyperspec
 {
     public abstract class Representation
     {
-        private readonly TemplatedLink _self;
+        private readonly string _selfTemplate;
         private readonly string _profileHref;
 
         private readonly IDictionary<string, IList<Representation>> _embeddedResources = new Dictionary<string, IList<Representation>>();
 
-        protected Representation(TemplatedLink self, string profileHref = null)
+        protected Representation(string selfTemplate, string profileHref = null)
         {
-            _self = self;
+            _selfTemplate = selfTemplate;
             _profileHref = profileHref;
         }
 
@@ -59,7 +59,7 @@ namespace Hyperspec
         /// <param name="builder"></param>
         protected virtual void AddSelfLink(ILinkBuilder builder)
         {
-            builder.AddSelfLink(_self);
+            builder.AddSelfLink(_selfTemplate);
         }
 
         /// <summary>
@@ -157,8 +157,8 @@ namespace Hyperspec
 
     public abstract class Representation<TContent> : Representation
     {
-        protected Representation(TContent content, TemplatedLink self, string resourceType)
-            : base(self, resourceType)
+        protected Representation(TContent content, string selfTemplate, string resourceType)
+            : base(selfTemplate, resourceType)
         {
             Content = content;
         }

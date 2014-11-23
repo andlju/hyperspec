@@ -3,14 +3,28 @@ using Xunit;
 
 namespace Hyperspec.Tests.Links
 {
+    public class MyTestClass
+    {
+        public string TestString { get; set; }
+        public Guid TestId { get; set; }
+    }
+
+    public class MyExtendedTestClass
+    {
+        public string TestString { get; set; }
+        public Guid TestId { get; set; }
+        public string ExtraString { get; set; }
+        public int ExtraInt { get; set; }
+    }
+
     public class resource_form_with_same_context_object : TestBase
     {
         protected IForm ResourceForm;
-        protected TemplatedLink TemplatedLink;
+        protected string LinkTemplate;
 
         protected override void Given()
         {
-            TemplatedLink = new TemplatedLink("/test/{testString}/something/{testId}");
+            LinkTemplate ="/test/{testString}/something/{testId}";
             var testObj = new MyExtendedTestClass()
             {
                 TestString = "ATestString",
@@ -18,7 +32,7 @@ namespace Hyperspec.Tests.Links
                 ExtraInt = 1337,
                 ExtraString = "AnExtraString"
             };
-            ResourceForm = new ResourceForm<MyExtendedTestClass>(TemplatedLink, new[] { testObj });
+            ResourceForm = new ResourceForm<MyExtendedTestClass>(LinkTemplate, new[] { testObj });
         }
 
         protected override void When()

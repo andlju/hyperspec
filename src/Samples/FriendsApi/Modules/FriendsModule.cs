@@ -10,10 +10,10 @@ namespace FriendsApi.Modules
 {
     public static class FriendsLinks
     {
-        public static TemplatedLink Friends = new TemplatedLink("/friends");
-        public static TemplatedLink Friend = new TemplatedLink("/friends/{slug}");
+        public static string Friends = "/friends";
+        public static string Friend = "/friends/{slug}";
 
-        public static TemplatedLink Image = new TemplatedLink("/image/{slug}");
+        public static string Image = "/image/{slug}";
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace FriendsApi.Modules
         {
             // Make sure to call with the HTTP header
             // Accept: application/hal+json
-            Get[FriendsLinks.Friends.GetPathTemplate()] = _ =>
+            Get[FriendsLinks.Friends] = _ =>
             {
                 var friend1 = new Friend()
                 {

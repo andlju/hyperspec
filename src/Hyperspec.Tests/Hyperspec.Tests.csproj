@@ -54,9 +54,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Links\link_with_no_params.cs" />
-    <Compile Include="Links\link_with_templated_params.cs" />
-    <Compile Include="Links\link_with_templated_params_and_query.cs" />
+    <None Include="Links\link_with_no_params.cs" />
+    <None Include="Links\link_with_templated_params.cs" />
+    <None Include="Links\link_with_templated_params_and_query.cs" />
     <Compile Include="Links\resource_form_with_same_context_object.cs" />
     <Compile Include="Links\resource_link_with_other_context_object.cs" />
     <Compile Include="Links\resource_link_with_same_context_object.cs" />

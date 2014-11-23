@@ -23,21 +23,21 @@ namespace Hyperspec
 
         private readonly Dictionary<string, TemplateParameterInfo> _parameterInfos;
 
-        private readonly UriTemplate _uriTemplate;
+        private readonly UriTemplate _originalUriTemplate;
         private readonly UriTemplate _extendedUriTemplate;
 
         protected readonly IEnumerable<object> Resources;
         private readonly string _title;
 
-        protected ResourceLinkBase(TemplatedLink templatedLink, IEnumerable<object> resources, string title, IEnumerable<TemplateParameterInfo> parameterInfos = null)
+        protected ResourceLinkBase(string linkTemplate, IEnumerable<object> resources, string title, IEnumerable<TemplateParameterInfo> parameterInfos = null)
         {
-            _uriTemplate = _extendedUriTemplate = templatedLink.GetTemplate();
+            _originalUriTemplate = _extendedUriTemplate = new UriTemplate(linkTemplate);
             _title = title;
 
             Resources = resources;
 
             _parameterInfos = new Dictionary<string, TemplateParameterInfo>();
-            foreach (var variable in _uriTemplate.Variables)
+            foreach (var variable in _originalUriTemplate.Variables)
             {
                 ParameterInfos[variable.Name.ToLowerInvariant()] = new TemplateParameterInfo()
                 {
@@ -50,8 +50,8 @@ namespace Hyperspec
             if (parameterInfos == null)
                 return;
 
-            var extendedUriBuilder = new UriTemplateBuilder(_uriTemplate);
-            var isFirst = !_uriTemplate.Template.Contains("?");
+            var extendedUriBuilder = new UriTemplateBuilder(_originalUriTemplate);
+            var isFirst = !_originalUriTemplate.Template.Contains("?");
             var varspecs = new List<VarSpec>();
             foreach (var param in parameterInfos)
             {
@@ -76,7 +76,7 @@ namespace Hyperspec
 
         protected string GetHref(bool includeExtraParameters)
         {
-            var template = includeExtraParameters ? _extendedUriTemplate : _uriTemplate;
+            var template = includeExtraParameters ? _extendedUriTemplate : _originalUriTemplate;
             var linkParts = GetParameters();
 
             var templateResolver = template.GetResolver();
@@ -155,7 +155,7 @@ namespace Hyperspec
     /// <typeparam name="TTemplate"></typeparam>
     public abstract class ResourceLinkBase<TTemplate> : ResourceLinkBase
     {
-        public ResourceLinkBase(TemplatedLink templatedLink, IEnumerable<object> resources, string title) : base(templatedLink, resources, title, GetParameterInfos())
+        protected ResourceLinkBase(string linkTemplate, IEnumerable<object> resources, string title) : base(linkTemplate, resources, title, GetParameterInfos())
         {
 
         }
