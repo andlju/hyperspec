@@ -53,7 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Hyperspec.Nancy.nuspec" />
+    <Content Include="Hyperspec.Nancy.nuversion" />
     <None Include="packages.config" />
+    <None Include="targets\Microsoft.Application.targets" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hyperspec.Hal\Hyperspec.Hal.csproj">
@@ -66,6 +69,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project=".\targets\Microsoft.Application.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

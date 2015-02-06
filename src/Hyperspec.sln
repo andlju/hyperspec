@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperspec", "Hyperspec\Hyperspec.csproj", "{C54A0BC4-1B8A-4410-8F13-8AC1B13B29D2}"
 EndProject
@@ -16,6 +16,23 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperspec.Nancy", "Hyperspec.Nancy\Hyperspec.Nancy.csproj", "{39D1F447-EFE4-498A-B674-67C38D64B3FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperspec.Hal", "Hyperspec.Hal\Hyperspec.Hal.csproj", "{003D61E1-B135-4175-8C0D-771C4EFAF7F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{DC7D7FA6-9E81-4B37-BA6E-AAF1A002D99E}"
+	ProjectSection(SolutionItems) = preProject
+		..\scripts\build.ps1 = ..\scripts\build.ps1
+		..\scripts\BuildBootstrap.psm1 = ..\scripts\BuildBootstrap.psm1
+		..\scripts\Default.ps1 = ..\scripts\Default.ps1
+		..\scripts\packages.config = ..\scripts\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{4DFA3C89-44B2-44EF-B98E-BD222F005096}"
+	ProjectSection(SolutionItems) = preProject
+		..\scripts\modules\Building.psm1 = ..\scripts\modules\Building.psm1
+		..\scripts\modules\JSTesting.psm1 = ..\scripts\modules\JSTesting.psm1
+		..\scripts\modules\Packaging.psm1 = ..\scripts\modules\Packaging.psm1
+		..\scripts\modules\Testing.psm1 = ..\scripts\modules\Testing.psm1
+		..\scripts\modules\Versioning.psm1 = ..\scripts\modules\Versioning.psm1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,5 +67,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E13364F0-FCB1-40A9-8511-9DF0E7CFD898} = {E1BFAAF0-B7BF-40EE-8B77-D939A7662D97}
 		{F3339064-7B7C-4FFC-844E-0349F9FC187F} = {CBD14121-9273-4594-8A5A-974506FE979F}
+		{4DFA3C89-44B2-44EF-B98E-BD222F005096} = {DC7D7FA6-9E81-4B37-BA6E-AAF1A002D99E}
 	EndGlobalSection
 EndGlobal

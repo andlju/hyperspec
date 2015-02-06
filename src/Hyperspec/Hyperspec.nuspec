@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>Hyperspec</id> 
+    <version>0.0.1</version> 
+    <authors>Anders Ljusberg</authors>
+    <description>Library for specifying hypermedia content</description> 
+    <language>en-US</language>
+    <tags>REST hypermedia</tags>
+    <dependencies>
+      <dependency id="Resta.UriTemplates" version="1.1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+		<file src="Hyperspec.dll" target="lib"/>
+	</files>
+</package>
