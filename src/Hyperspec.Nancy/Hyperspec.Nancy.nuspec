@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <package> 
   <metadata> 
-    <id>Hyperspec</id> 
+    <id>Hyperspec.Nancy</id> 
     <version>0.0.1</version> 
     <authors>Anders Ljusberg</authors>
     <description>Hyperspec serializer for HAL and Nancy</description> 
     <language>en-US</language>
     <tags>REST hypermedia nancy</tags>
     <dependencies>
-      <dependency id="Hyperspec" version="0.1.0" />
+      <dependency id="Hyperspec" version="0.1" />
     </dependencies>
   </metadata>
   <files>

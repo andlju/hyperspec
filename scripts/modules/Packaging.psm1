@@ -9,7 +9,7 @@ $nuget_exe = "$nugetFolder\tools\NuGet.exe"
 $deployFeedFolder = ""
 $deployFeed = ""
 $deployApiKey = ""
-$nugetFeedFolder = ""
+$nugetFeedFolder = "c:\temp\nuget"
 $nugetFeed = ""
 $nugetApiKey = ""
 

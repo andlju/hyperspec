@@ -31,9 +31,9 @@ FormatTaskName (("-"*25) + "[{0}]" + ("-"*25))
 
 Task Default -Depends Local
 
-Task Local -Depends Clean, Build, Package
+Task Local -Depends Clean, Build, Package, Publish
 
-Task LocalWithTests -Depends Clean, Build, UnitTest, Package
+Task LocalWithTests -Depends Clean, Build, UnitTest, Package, Publish
 
 Task VersionFiles {
     $packageVersion = "$mainVersion.$buildNumber"
