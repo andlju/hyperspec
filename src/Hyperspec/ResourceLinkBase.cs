@@ -84,7 +84,7 @@ namespace Hyperspec
             {
                 var value = GetParameter(Resources, part.Name);
 
-                if (value != null || !part.IsRequired)
+                if (value != null)
                 {
                     templateResolver.Bind(part.Name, value);
                 }
