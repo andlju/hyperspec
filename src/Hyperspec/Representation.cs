@@ -15,6 +15,11 @@ namespace Hyperspec
 
         protected Representation(string selfTemplate, string profileHref = null)
         {
+            if (selfTemplate == null)
+            {
+                throw new ArgumentNullException("selfTemplate", "You must provide a template for the self link");
+            }
+
             _selfTemplate = selfTemplate;
             _profileHref = profileHref;
         }
