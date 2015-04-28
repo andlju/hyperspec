@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +14,8 @@ namespace Hyperspec
 
         private readonly IDictionary<string, IList<Representation>> _embeddedResources = new Dictionary<string, IList<Representation>>();
 
-        protected Representation(string selfTemplate, string profileHref = null)
+        protected Representation(string selfTemplate = null, string profileHref = null)
         {
-            if (selfTemplate == null)
-            {
-                throw new ArgumentNullException("selfTemplate", "You must provide a template for the self link");
-            }
-
             _selfTemplate = selfTemplate;
             _profileHref = profileHref;
         }
@@ -64,7 +60,10 @@ namespace Hyperspec
         /// <param name="builder"></param>
         protected virtual void AddSelfLink(ILinkBuilder builder)
         {
-            builder.AddSelfLink(_selfTemplate);
+            if (_selfTemplate != null)
+            {
+                builder.AddSelfLink(_selfTemplate);
+            }
         }
 
         /// <summary>
