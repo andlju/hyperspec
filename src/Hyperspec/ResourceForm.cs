@@ -31,7 +31,7 @@ namespace Hyperspec
                 Title = pi.Title,
                 Type = pi.Type,
                 IsRequired = pi.IsRequired,
-                DefaultValue = GetParameter(Resources, pi.Name)
+                DefaultValue = GetParameter(Resources, pi.Name).FirstOrDefault()
             });
         }
     }

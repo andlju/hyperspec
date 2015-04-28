@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Links\resource_form_with_same_context_object.cs" />
+    <Compile Include="Links\resource_link_with_dictionary_context_object.cs" />
     <Compile Include="Links\resource_link_with_other_context_object.cs" />
     <Compile Include="Links\resource_link_with_same_context_object.cs" />
     <Compile Include="Links\resource_link_with_same_context_object_and_automatic_querystring.cs" />

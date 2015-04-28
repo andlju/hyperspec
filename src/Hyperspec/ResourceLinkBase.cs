@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using Resta.UriTemplates;
 
@@ -84,7 +85,7 @@ namespace Hyperspec
             {
                 var value = GetParameter(Resources, part.Name);
 
-                if (value != null)
+                if (value.Any())
                 {
                     templateResolver.Bind(part.Name, value);
                 }
@@ -117,35 +118,62 @@ namespace Hyperspec
             return true;
         }
 
-        protected static string GetParameter(IEnumerable<object> contextObjects, string paramName)
+        protected static IEnumerable<string> GetParameter(IEnumerable<object> contextObjects, string paramName)
         {
-            object context = null;
-            PropertyInfo prop = null;
+            object val = null;
+
             foreach (var o in contextObjects)
             {
+                var dict = o as IDictionary<string, object>;
+                if (dict != null)
+                {
+                    if (dict.TryGetValue(paramName, out val))
+                    {
+                        break;
+                    }
+                    continue;
+                }
+
                 var contextType = o.GetType();
 
-                prop = contextType.GetProperty(paramName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+                var prop = contextType.GetProperty(paramName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
                 if (prop != null)
                 {
-                    context = o;
+                    val = prop.GetValue(o);
                     break;
                 }
             }
-            if (prop == null)
-                return null;
 
-            var val = prop.GetValue(context);
             if (val == null)
-                return null;
+                yield break;
+            
             if (val is DateTime)
-                return ((DateTime)val).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            {
+                yield return ((DateTime)val).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                yield break;
+            }
 
             var ints = val as int[];
             if (ints != null)
-                return string.Join(",", ints);
+            {
+                foreach (var i in ints)
+                {
+                    yield return i.ToString();
+                }
+                yield break;
+            }
 
-            return val.ToString();
+            var objects = val as IEnumerable<object>;
+            if (objects != null)
+            {
+                foreach (var o in objects)
+                {
+                    yield return o.ToString();
+                }
+                yield break;
+            }
+
+            yield return val.ToString();
         }
     }
 
