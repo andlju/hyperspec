@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -106,7 +105,7 @@ namespace Hyperspec
         /// <returns></returns>
         public IDictionary<string, IList<ILink>> GetLinks()
         {
-            var linkBuilder = new LinkBuilder(GetLinkContext());
+            var linkBuilder = HyperSpecConfiguration.LinkBuilderFactory(GetLinkContext());
 
             // Add common links
             AddSelfLink(linkBuilder);

@@ -43,11 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HyperSpecFactory.cs" />
     <Compile Include="IForm.cs" />
     <Compile Include="ILink.cs" />
     <Compile Include="FormParameterInfo.cs" />
     <Compile Include="IFormBuilder.cs" />
-    <Compile Include="IResourceLink.cs" />
     <Compile Include="ILinkBuilder.cs" />
     <Compile Include="ProfileLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +55,7 @@
     <Compile Include="Representation.cs" />
     <Compile Include="ResourceForm.cs" />
     <Compile Include="FormBuilder.cs" />
+    <Compile Include="ResourceLink.cs" />
     <Compile Include="ResourceLinkBase.cs" />
     <Compile Include="LinkBuilder.cs" />
   </ItemGroup>
