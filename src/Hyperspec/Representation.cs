@@ -106,7 +106,7 @@ namespace Hyperspec
         /// <returns></returns>
         public IDictionary<string, IList<ILink>> GetLinks(string linkBase = "")
         {
-            var linkBuilder = new LinkBuilder(GetContent(), linkBase);
+            var linkBuilder = new LinkBuilder(GetLinkContext(), linkBase);
 
             // Add common links
             AddSelfLink(linkBuilder);
