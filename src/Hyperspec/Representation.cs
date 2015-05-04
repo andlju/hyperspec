@@ -102,10 +102,11 @@ namespace Hyperspec
         /// Get all links for this resource.
         /// </summary>
         /// <remarks>Used when serializing</remarks>
+        /// <param name="linkBase">Base url to use for links</param>
         /// <returns></returns>
-        public IDictionary<string, IList<ILink>> GetLinks()
+        public IDictionary<string, IList<ILink>> GetLinks(string linkBase = "")
         {
-            var linkBuilder = HyperSpecConfiguration.LinkBuilderFactory(GetLinkContext());
+            var linkBuilder = new LinkBuilder(GetContent(), linkBase);
 
             // Add common links
             AddSelfLink(linkBuilder);
@@ -118,11 +119,12 @@ namespace Hyperspec
         /// <summary>
         /// Get all forms for this resource
         /// </summary>
+        /// <param name="linkBase">Base url to use for links</param>
         /// <remarks>Used when serializing</remarks>
         /// <returns></returns>
-        public IDictionary<string, IList<IForm>> GetForms()
+        public IDictionary<string, IList<IForm>> GetForms(string linkBase = "")
         {
-            var formsBuilder = new FormBuilder(GetLinkContext());
+            var formsBuilder = new FormBuilder(GetLinkContext(), linkBase);
             AddForms(formsBuilder);
             return formsBuilder.Forms;
         }

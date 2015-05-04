@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HalEmbeddedConverter.cs" />
     <Compile Include="HalNancySerializer.cs" />
     <Compile Include="HalResourceResponseProcessor.cs" />
     <Compile Include="HalResponse.cs" />

@@ -8,9 +8,12 @@ namespace Hyperspec
         public IDictionary<string, IList<IForm>> Forms { get; private set; }
 
         private readonly IEnumerable<object> _contexts;
-        public FormBuilder(IEnumerable<object> contexts)
+        private readonly string _linkBase;
+
+        public FormBuilder(IEnumerable<object> contexts, string linkBase)
         {
             _contexts = contexts;
+            _linkBase = linkBase;
             Forms = new Dictionary<string, IList<IForm>>();
         }
 
@@ -25,6 +28,11 @@ namespace Hyperspec
             var contexts = _contexts;
             if (context != null)
                 contexts = new[] { context }.Concat(_contexts);
+
+            if (!linkTemplate.Contains("://"))
+            {
+                linkTemplate = _linkBase + linkTemplate;
+            }
 
             formList.Add(new ResourceForm<TTemplate>(linkTemplate, contexts, prompt, method));
         }

@@ -8,7 +8,7 @@ namespace Hyperspec
     {
         private readonly IEnumerable<object> _contexts;
         public IDictionary<string, IList<ILink>> Links { get; private set; }
-        private string _linkBase = String.Empty;
+        private readonly string _linkBase;
 
         public LinkBuilder(IEnumerable<object> contexts, string linkBase)
         {
@@ -23,7 +23,11 @@ namespace Hyperspec
             if (context != null)
                 contexts = new[] { context }.Concat(_contexts);
 
-            ILink link = new ResourceLink<TTemplate>(_linkBase + linkTemplate, contexts, prompt);
+            if (!linkTemplate.Contains("://"))
+            {
+                linkTemplate = _linkBase + linkTemplate;
+            }
+            ILink link = new ResourceLink<TTemplate>(linkTemplate, contexts, prompt);
 
             AddNamedLink(linkName, link);
         }
@@ -33,7 +37,11 @@ namespace Hyperspec
             var contexts = _contexts;
             if (context != null)
                 contexts = new[] { context }.Concat(_contexts);
-            ILink link = new ResourceLink(_linkBase + linkTemplate, contexts, prompt);
+            if (!linkTemplate.Contains("://"))
+            {
+                linkTemplate = _linkBase + linkTemplate;
+            }
+            ILink link = new ResourceLink(linkTemplate, contexts, prompt);
 
             AddNamedLink(linkName, link);
         }

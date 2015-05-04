@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HyperSpecFactory.cs" />
     <Compile Include="IForm.cs" />
     <Compile Include="ILink.cs" />
     <Compile Include="FormParameterInfo.cs" />

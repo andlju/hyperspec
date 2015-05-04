@@ -7,10 +7,12 @@ namespace Hyperspec.Hal
     public class HalConverter : JsonConverter
     {
         private readonly JsonSerializer _objectSerializer;
+        private readonly Func<string> _linkBaseFunc;
 
-        public HalConverter(JsonSerializer objectSerializer)
+        public HalConverter(JsonSerializer objectSerializer, Func<string> linkBaseFunc)
         {
             _objectSerializer = objectSerializer;
+            _linkBaseFunc = linkBaseFunc;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -34,12 +36,14 @@ namespace Hyperspec.Hal
                 obj.Add("_embedded", JObject.FromObject(embedded, serializer));
             }
 
-            var links = halResource.GetLinks();
+            var linkBase = _linkBaseFunc();
+
+            var links = halResource.GetLinks(linkBase);
             if (links != null && links.Count > 0)
             {
                 obj.Add("_links", JObject.FromObject(links, serializer));
             }
-            var forms = halResource.GetForms();
+            var forms = halResource.GetForms(linkBase);
             if (forms != null && forms.Count > 0)
             {
                 obj.Add("_forms", JObject.FromObject(forms, serializer));

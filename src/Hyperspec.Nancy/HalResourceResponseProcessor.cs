@@ -9,14 +9,14 @@ namespace Hyperspec.Nancy
 {
     public class HalResourceResponseProcessor : IResponseProcessor
     {
-        private readonly ISerializer _serializer;
+        private readonly JsonSerializer _objectSerializer;
 
         private static readonly IEnumerable<Tuple<string, MediaRange>> extensionMappings =
             new[] { new Tuple<string, MediaRange>("hal", MediaRange.FromString("application/hal+json")) };
 
         public HalResourceResponseProcessor(JsonSerializer objectSerializer)
         {
-            _serializer = new HalNancySerializer(objectSerializer);
+            _objectSerializer = objectSerializer;
         }
 
         public ProcessorMatch CanProcess(MediaRange requestedMediaRange, dynamic model, NancyContext context)
@@ -41,7 +41,7 @@ namespace Hyperspec.Nancy
         {
             var halModel = model as Representation;
 
-            return new HalResponse(halModel, _serializer);
+            return new HalResponse(halModel, new HalNancySerializer(_objectSerializer, context));
         }
 
         public IEnumerable<Tuple<string, MediaRange>> ExtensionMappings

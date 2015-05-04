@@ -3,17 +3,19 @@ using System.IO;
 using Hyperspec.Hal;
 using Nancy;
 using Nancy.IO;
+using Nancy.Json;
 using Newtonsoft.Json;
 
 namespace Hyperspec.Nancy
 {
+
     public class HalNancySerializer : ISerializer
     {
-        private JsonSerializer _serializer;
+        private readonly JsonSerializer _serializer;
 
-        public HalNancySerializer(JsonSerializer objectSerializer)
+        public HalNancySerializer(JsonSerializer objectSerializer, NancyContext context)
         {
-            _serializer = new HalJsonSerializer(objectSerializer);
+            _serializer = new HalJsonSerializer(objectSerializer, () => context.Request.Url.SiteBase);
         }
 
         public bool CanSerialize(string contentType)
