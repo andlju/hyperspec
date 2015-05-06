@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Emit;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -27,7 +28,10 @@ namespace Hyperspec.Hal
                 var contentObj = JObject.FromObject(content, _objectSerializer);
                 foreach (JProperty prop in contentObj.Children())
                 {
-                    obj[prop.Name] = prop.Value;
+                    if (contentContext.IncludeProperty(prop.Name, prop.Value))
+                    {
+                        obj[prop.Name] = prop.Value;
+                    }
                 }
             }
 

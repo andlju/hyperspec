@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -124,27 +125,46 @@ namespace Hyperspec
 
             foreach (var context in contexts)
             {
-                var o = context.Content;
-                var dict = o as IDictionary<string, object>;
+                var content = context.Content;
+                var dict = content as IDictionary<string, object>;
                 if (dict != null)
                 {
+                    // The content object is a dictionary. Let's try to find a value.
                     if (dict.TryGetValue(paramName, out val))
                     {
-                        break;
+                        // We found the value. Let's see if we want to use it?
+                        if (context.IncludeProperty(paramName, val))
+                        {
+                            // Yep, no need to check any other context objects
+                            break;
+                        }
+                        // Not found, let's continue with the next context object
+                        val = null;
                     }
                     continue;
                 }
 
-                var contextType = o.GetType();
-
+                // So we didn't get a dictionary. What did we get then?
+                var contextType = content.GetType();
+                
+                // Find out if there's a property with this name
                 var prop = contextType.GetProperty(paramName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
                 if (prop != null)
                 {
-                    val = prop.GetValue(o);
-                    break;
+                    // Get the value of the property
+                    val = prop.GetValue(content);
+                    if (context.IncludeProperty(paramName, val))
+                    {
+                        // Found the value, no need to check any more context objects
+                        break;
+                    }
+
+                    // Found a value but not supposed to use it. Let's reset and try the next context object
+                    val = null;
                 }
             }
-
+            
+            // No value found
             if (val == null)
                 yield break;
             
