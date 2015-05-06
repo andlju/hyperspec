@@ -21,8 +21,9 @@ namespace Hyperspec.Hal
             
             JObject obj = new JObject();
 
-            foreach (var content in halResource.GetContent())
+            foreach (var contentContext in halResource.GetContent())
             {
+                var content = contentContext.Content;
                 var contentObj = JObject.FromObject(content, _objectSerializer);
                 foreach (JProperty prop in contentObj.Children())
                 {

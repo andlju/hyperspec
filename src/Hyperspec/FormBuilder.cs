@@ -7,10 +7,10 @@ namespace Hyperspec
     {
         public IDictionary<string, IList<IForm>> Forms { get; private set; }
 
-        private readonly IEnumerable<object> _contexts;
+        private readonly IEnumerable<IContentContext> _contexts;
         private readonly string _linkBase;
 
-        public FormBuilder(IEnumerable<object> contexts, string linkBase)
+        public FormBuilder(IEnumerable<IContentContext> contexts, string linkBase)
         {
             _contexts = contexts;
             _linkBase = linkBase;
@@ -27,7 +27,7 @@ namespace Hyperspec
             }
             var contexts = _contexts;
             if (context != null)
-                contexts = new[] { context }.Concat(_contexts);
+                contexts = new[] { new ContentContext(context) }.Concat(_contexts);
 
             if (!linkTemplate.Contains("://"))
             {

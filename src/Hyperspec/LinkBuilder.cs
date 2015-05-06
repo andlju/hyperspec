@@ -6,22 +6,22 @@ namespace Hyperspec
 {
     class LinkBuilder : ILinkBuilder
     {
-        private readonly IEnumerable<object> _contexts;
+        private readonly IEnumerable<IContentContext> _contexts;
         public IDictionary<string, IList<ILink>> Links { get; private set; }
         private readonly string _linkBase;
 
-        public LinkBuilder(IEnumerable<object> contexts, string linkBase)
+        public LinkBuilder(IEnumerable<IContentContext> contexts, string linkBase)
         {
             _contexts = contexts;
             _linkBase = linkBase;
             Links = new Dictionary<string, IList<ILink>>();
         }
 
-        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt = null, object context = null)
+        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt = null, object content = null)
         {
             var contexts = _contexts;
-            if (context != null)
-                contexts = new[] { context }.Concat(_contexts);
+            if (content != null)
+                contexts = new[] { new ContentContext(content) }.Concat(_contexts);
 
             if (!linkTemplate.Contains("://"))
             {
@@ -32,11 +32,11 @@ namespace Hyperspec
             AddNamedLink(linkName, link);
         }
 
-        public void AddLink(string linkName, string linkTemplate, string prompt = null, object context = null)
+        public void AddLink(string linkName, string linkTemplate, string prompt = null, object content = null)
         {
             var contexts = _contexts;
-            if (context != null)
-                contexts = new[] { context }.Concat(_contexts);
+            if (content != null)
+                contexts = new[] { new ContentContext(content) }.Concat(_contexts);
             if (!linkTemplate.Contains("://"))
             {
                 linkTemplate = _linkBase + linkTemplate;

@@ -7,7 +7,8 @@ namespace Hyperspec
     {
         private readonly string _method;
 
-        public ResourceForm(string linkTemplate, IEnumerable<object> resources, string title = null, string method = "POST") : base(linkTemplate, resources, title)
+        public ResourceForm(string linkTemplate, IEnumerable<IContentContext> contexts, string title = null, string method = "POST") : 
+            base(linkTemplate, contexts, title)
         {
             _method = method;
         }
@@ -31,7 +32,7 @@ namespace Hyperspec
                 Title = pi.Title,
                 Type = pi.Type,
                 IsRequired = pi.IsRequired,
-                DefaultValue = GetParameter(Resources, pi.Name).FirstOrDefault()
+                DefaultValue = GetParameter(Contexts, pi.Name).FirstOrDefault()
             });
         }
     }

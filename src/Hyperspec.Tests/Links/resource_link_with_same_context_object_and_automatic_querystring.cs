@@ -17,7 +17,7 @@ namespace Hyperspec.Tests.Links
                 ExtraInt = 1337,
                 ExtraString = "AnExtraString"
             };
-            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { testObj });
+            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { new ContentContext(testObj) });
         }
 
         protected override void When()

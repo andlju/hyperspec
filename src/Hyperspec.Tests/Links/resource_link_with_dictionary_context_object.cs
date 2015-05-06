@@ -19,7 +19,7 @@ namespace Hyperspec.Tests.Links
             };
             var testDict = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
             testDict["ExtraString"] = "MyExtraString";
-            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new object[] { testObj, testDict });
+            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new [] { new ContentContext(testObj), new ContentContext(testDict) });
         }
 
         protected override void When()

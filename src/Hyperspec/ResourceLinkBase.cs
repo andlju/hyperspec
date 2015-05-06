@@ -27,15 +27,15 @@ namespace Hyperspec
         private readonly UriTemplate _originalUriTemplate;
         private readonly UriTemplate _extendedUriTemplate;
 
-        protected readonly IEnumerable<object> Resources;
+        protected readonly IEnumerable<IContentContext> Contexts;
         private readonly string _title;
 
-        protected ResourceLinkBase(string linkTemplate, IEnumerable<object> resources, string title, IEnumerable<TemplateParameterInfo> parameterInfos = null)
+        protected ResourceLinkBase(string linkTemplate, IEnumerable<IContentContext> contexts, string title, IEnumerable<TemplateParameterInfo> parameterInfos = null)
         {
             _originalUriTemplate = _extendedUriTemplate = new UriTemplate(linkTemplate);
             _title = title;
 
-            Resources = resources;
+            Contexts = contexts;
 
             _parameterInfos = new Dictionary<string, TemplateParameterInfo>();
             foreach (var variable in _originalUriTemplate.Variables)
@@ -83,7 +83,7 @@ namespace Hyperspec
             var templateResolver = template.GetResolver();
             foreach (var part in linkParts)
             {
-                var value = GetParameter(Resources, part.Name);
+                var value = GetParameter(Contexts, part.Name);
 
                 if (value.Any())
                 {
@@ -118,12 +118,13 @@ namespace Hyperspec
             return true;
         }
 
-        protected static IEnumerable<string> GetParameter(IEnumerable<object> contextObjects, string paramName)
+        protected static IEnumerable<string> GetParameter(IEnumerable<IContentContext> contexts, string paramName)
         {
             object val = null;
 
-            foreach (var o in contextObjects)
+            foreach (var context in contexts)
             {
+                var o = context.Content;
                 var dict = o as IDictionary<string, object>;
                 if (dict != null)
                 {
@@ -183,7 +184,8 @@ namespace Hyperspec
     /// <typeparam name="TTemplate"></typeparam>
     public abstract class ResourceLinkBase<TTemplate> : ResourceLinkBase
     {
-        protected ResourceLinkBase(string linkTemplate, IEnumerable<object> resources, string title) : base(linkTemplate, resources, title, GetParameterInfos())
+        protected ResourceLinkBase(string linkTemplate, IEnumerable<IContentContext> contexts, string title) : 
+            base(linkTemplate, contexts, title, GetParameterInfos())
         {
 
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,6 @@ namespace Hyperspec
     {
         private readonly string _selfTemplate;
         private readonly string _profileHref;
-
         private readonly IDictionary<string, IList<Representation>> _embeddedResources = new Dictionary<string, IList<Representation>>();
 
         protected Representation(string selfTemplate = null, string profileHref = null)
@@ -31,6 +31,11 @@ namespace Hyperspec
             }
             representation.Parent = this;
             resourceList.Add(representation);
+        }
+
+        public virtual IEnumerable<string> PropertiesToIngore()
+        {
+            yield break;
         }
 
         /// <summary>
@@ -83,9 +88,9 @@ namespace Hyperspec
         /// </summary>
         /// <remarks>Used when serializing</remarks>
         /// <returns></returns>
-        public virtual IEnumerable<object> GetContent()
+        public virtual IEnumerable<IContentContext> GetContent()
         {
-            yield return this;
+            yield return new ContentContext(this);
         }
 
         /// <summary>
@@ -133,7 +138,7 @@ namespace Hyperspec
         /// An enumerable of all context objects for this resource. This will be used when resolving
         /// link and form templates.
         /// </summary>
-        protected IEnumerable<object> GetLinkContext()
+        protected IEnumerable<IContentContext> GetLinkContext()
         {
             foreach (var content in GetLocalLinkContext())
                 yield return content;
@@ -154,7 +159,7 @@ namespace Hyperspec
         /// </summary>
         /// <remarks>This defaults to using the <c>GetContent</c> method.</remarks>
         /// <returns></returns>
-        protected virtual IEnumerable<object> GetLocalLinkContext()
+        protected virtual IEnumerable<IContentContext> GetLocalLinkContext()
         {
             return GetContent();
         }
@@ -175,10 +180,10 @@ namespace Hyperspec
         /// actual representation combined with all properties on the model.
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<object> GetContent()
+        public override IEnumerable<IContentContext> GetContent()
         {
-            yield return this;
-            yield return Content;
+            yield return new ContentContext(this);
+            yield return new ContentContext(Content);
         }
     }
 }

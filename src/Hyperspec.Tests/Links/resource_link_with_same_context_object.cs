@@ -18,7 +18,7 @@ namespace Hyperspec.Tests.Links
                 ExtraInt = 1337,
                 ExtraString = null
             };
-            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { testObj });
+            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { new ContentContext(testObj) });
         }
 
         protected override void When()
@@ -41,7 +41,7 @@ namespace Hyperspec.Tests.Links
 		{
 			LinkTemplate = "/test/{testString}/something/{testId}";
 
-			Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new object[]{});
+			Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new IContentContext[] {});
 		}
 
 		protected override void When()
@@ -70,7 +70,7 @@ namespace Hyperspec.Tests.Links
                 ExtraInt = 1337,
                 ExtraString = "AnExtraString"
             };
-            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { testObj });
+            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { new ContentContext(testObj) });
         }
 
         protected override void When()
