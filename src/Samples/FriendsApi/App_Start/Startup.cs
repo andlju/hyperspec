@@ -10,7 +10,8 @@ namespace FriendsApi
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseNancy();
+            app.Map("/nancy", a => a.UseNancy());
+            app.Map("/api", a => a.UseWebApi(WebApiConfiguration.Initialize()));
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Hyperspec.Nancy
         private readonly JsonSerializer _objectSerializer;
 
         private static readonly IEnumerable<Tuple<string, MediaRange>> extensionMappings =
-            new[] { new Tuple<string, MediaRange>("hal", MediaRange.FromString("application/hal+json")) };
+            new[] { new Tuple<string, MediaRange>("hal", new MediaRange("application/hal+json")) };
 
         public HalResourceResponseProcessor(JsonSerializer objectSerializer)
         {

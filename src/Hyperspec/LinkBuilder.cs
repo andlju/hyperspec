@@ -7,13 +7,14 @@ namespace Hyperspec
     class LinkBuilder : ILinkBuilder
     {
         private readonly IEnumerable<IContentContext> _contexts;
-        public IDictionary<string, IList<ILink>> Links { get; private set; }
         private readonly string _linkBase;
+
+        public IDictionary<string, IList<ILink>> Links { get; private set; }
 
         public LinkBuilder(IEnumerable<IContentContext> contexts, string linkBase)
         {
             _contexts = contexts;
-            _linkBase = linkBase;
+            _linkBase = linkBase.EndsWith("/") ? linkBase : linkBase + "/"; // Always end the base with a /
             Links = new Dictionary<string, IList<ILink>>();
         }
 
@@ -23,13 +24,22 @@ namespace Hyperspec
             if (content != null)
                 contexts = new[] { new ContentContext(content) }.Concat(_contexts);
 
-            if (!linkTemplate.Contains("://"))
-            {
-                linkTemplate = _linkBase + linkTemplate;
-            }
+            linkTemplate = RebaseLink(linkTemplate);
+
             ILink link = new ResourceLink<TTemplate>(linkTemplate, contexts, prompt);
 
             AddNamedLink(linkName, link);
+        }
+
+        private string RebaseLink(string linkTemplate)
+        {
+            if (!linkTemplate.Contains("//"))
+            {
+                linkTemplate = linkTemplate.TrimStart('/'); // Since the base always ends with a /, make sure to remove any from the template
+
+                linkTemplate = _linkBase + linkTemplate;
+            }
+            return linkTemplate;
         }
 
         public void AddLink(string linkName, string linkTemplate, string prompt = null, object content = null)
@@ -37,10 +47,9 @@ namespace Hyperspec
             var contexts = _contexts;
             if (content != null)
                 contexts = new[] { new ContentContext(content) }.Concat(_contexts);
-            if (!linkTemplate.Contains("://"))
-            {
-                linkTemplate = _linkBase + linkTemplate;
-            }
+
+            linkTemplate = RebaseLink(linkTemplate);
+            
             ILink link = new ResourceLink(linkTemplate, contexts, prompt);
 
             AddNamedLink(linkName, link);

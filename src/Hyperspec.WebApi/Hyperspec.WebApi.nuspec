@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>Hyperspec.WebApi</id> 
+    <version>0.2.</version> 
+    <authors>Anders Ljusberg</authors>
+    <description>WebApi integration for Hyperspec</description> 
+    <language>en-US</language>
+    <tags>REST hypermedia WebApi</tags>
+    <dependencies>
+      <dependency id="Hyperspec" version="0.2" />
+      <dependency id="Hyperspec.Hal" version="0.2" />
+      <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2" />
+      <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2" />
+      <dependency id="Microsoft.Owin" version="3.0"/>
+      <dependency id="Owin" version="1.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Hyperspec.WebApi.dll" target="lib"/>
+  </files>
+</package>

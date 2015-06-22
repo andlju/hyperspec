@@ -49,6 +49,7 @@
     <Compile Include="FormParameterInfo.cs" />
     <Compile Include="IFormBuilder.cs" />
     <Compile Include="ILinkBuilder.cs" />
+    <Compile Include="OwinExtensions.cs" />
     <Compile Include="ProfileLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionHelpers.cs" />

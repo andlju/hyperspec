@@ -3,49 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using FriendsApi.Models;
-using Hyperspec;
+using FriendsApi.Representations;
 using Nancy;
 
 namespace FriendsApi.Modules
 {
-    public static class FriendsLinks
-    {
-        public static string Friends = "/friends";
-        public static string Friend = "/friends/{slug}";
-
-        public static string Image = "/image/{slug}";
-    }
-
-    /// <summary>
-    /// Representation for a single friend. 
-    /// </summary>
-    public class FriendRepresentation : Representation<Friend>
-    {
-        public FriendRepresentation(Friend content) 
-            : base(content, FriendsLinks.Friend, "frapi:friend")
-        {
-        }
-
-        // The self link is added automatically
-        protected override void AddLinks(ILinkBuilder linkBuilder)
-        {
-            linkBuilder.AddLink("image", FriendsLinks.Image, prompt: "Image");
-            linkBuilder.AddLink("blog", Content.Blog, prompt: "Blog");
-        }
-    }
-
-    /// <summary>
-    /// A collection of friends
-    /// </summary>
-    public class FriendsRepresentation : Representation
-    {
-        public FriendsRepresentation() : base(FriendsLinks.Friends, "frapi:friends")
-        {
-            
-        }
-    }
-
-    
     public class FriendsModule : NancyModule
     {
         public FriendsModule()

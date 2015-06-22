@@ -2,7 +2,7 @@
 <package> 
   <metadata> 
     <id>Hyperspec</id> 
-    <version>0.0.1</version> 
+    <version>0.2.0</version> 
     <authors>Anders Ljusberg</authors>
     <description>Library for specifying hypermedia content</description> 
     <language>en-US</language>

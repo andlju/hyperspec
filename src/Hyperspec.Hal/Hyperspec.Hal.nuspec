@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>Hyperspec.Hal</id> 
+    <version>0.0.1</version> 
+    <authors>Anders Ljusberg</authors>
+    <description>Hyperspec serializer for HAL</description> 
+    <language>en-US</language>
+    <tags>REST hypermedia HAL</tags>
+    <dependencies>
+      <dependency id="Hyperspec" version="0.2" />
+      <dependency id="Newtonsoft.Json" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Hyperspec.Hal.dll" target="lib"/>
+  </files>
+</package>

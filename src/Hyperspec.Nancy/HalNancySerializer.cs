@@ -4,18 +4,22 @@ using Hyperspec.Hal;
 using Nancy;
 using Nancy.IO;
 using Nancy.Json;
+using Nancy.Owin;
 using Newtonsoft.Json;
 
 namespace Hyperspec.Nancy
 {
-
     public class HalNancySerializer : ISerializer
     {
         private readonly JsonSerializer _serializer;
 
         public HalNancySerializer(JsonSerializer objectSerializer, NancyContext context)
         {
-            _serializer = new HalJsonSerializer(objectSerializer, () => context.Request.Url.SiteBase);
+            _serializer = new HalJsonSerializer(objectSerializer, () =>
+            {
+                var environment = context.GetOwinEnvironment();
+                return environment.GetLinkBase();
+            });
         }
 
         public bool CanSerialize(string contentType)

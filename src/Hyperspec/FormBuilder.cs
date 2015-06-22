@@ -13,7 +13,7 @@ namespace Hyperspec
         public FormBuilder(IEnumerable<IContentContext> contexts, string linkBase)
         {
             _contexts = contexts;
-            _linkBase = linkBase;
+            _linkBase = linkBase.EndsWith("/") ? linkBase : linkBase + "/"; // Always end the base with a /
             Forms = new Dictionary<string, IList<IForm>>();
         }
 
@@ -29,12 +29,21 @@ namespace Hyperspec
             if (context != null)
                 contexts = new[] { new ContentContext(context) }.Concat(_contexts);
 
-            if (!linkTemplate.Contains("://"))
-            {
-                linkTemplate = _linkBase + linkTemplate;
-            }
+            linkTemplate = RebaseLink(linkTemplate);
 
             formList.Add(new ResourceForm<TTemplate>(linkTemplate, contexts, prompt, method));
         }
+
+        private string RebaseLink(string linkTemplate)
+        {
+            if (!linkTemplate.Contains("//"))
+            {
+                linkTemplate = linkTemplate.TrimStart('/'); // Since the base always ends with a /, make sure to remove any from the template
+
+                linkTemplate = _linkBase + linkTemplate;
+            }
+            return linkTemplate;
+        }
+
     }
 }
