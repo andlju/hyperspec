@@ -33,9 +33,14 @@ namespace Hyperspec
             resourceList.Add(representation);
         }
 
-        public virtual IEnumerable<string> PropertiesToIngore()
+        protected virtual IEnumerable<string> PropertiesToIgnore()
         {
             yield break;
+        }
+
+        protected bool IncludeProperty(string name, object val)
+        {
+            return !PropertiesToIgnore().Any(p => p == name);
         }
 
         /// <summary>
@@ -90,7 +95,7 @@ namespace Hyperspec
         /// <returns></returns>
         public virtual IEnumerable<IContentContext> GetContent()
         {
-            yield return new ContentContext(this);
+            yield return new ContentContext(this, IncludeProperty);
         }
 
         /// <summary>
@@ -182,8 +187,8 @@ namespace Hyperspec
         /// <returns></returns>
         public override IEnumerable<IContentContext> GetContent()
         {
-            yield return new ContentContext(this);
-            yield return new ContentContext(Content);
+            yield return new ContentContext(this, IncludeProperty);
+            yield return new ContentContext(Content, IncludeProperty);
         }
     }
 }
