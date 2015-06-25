@@ -1,0 +1,12 @@
+<div class="btn-group">
+    <button type="button" ng-hide="links" class="btn" title="{{link.href}}" ng-click="followLink(link)">{{title||link.title||linkType}}</button>
+    <button type="button" ng-show="links" class="btn dropdown-toggle" data-toggle="dropdown">
+        <span>{{linkType}}</span>
+        <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="" ng-repeat="sublink in links" title="{{sublink.href}}" ng-click="$parent.followLink(sublink)">{{$parent.title || (sublink.title || $parent.linkType)}}</a></li>
+    </ul>
+</div>
+

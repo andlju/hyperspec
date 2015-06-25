@@ -1,0 +1,33 @@
+﻿
+
+<div class="modal-header">
+    <h3>Result</h3>
+</div>
+
+<div class="modal-body">
+    <tabset>
+        <tab heading="Content">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><a href="" ng-click="isCollapsed = !isCollapsed">Http {{status}}</a></h4>
+                </div>
+                <div class="panel-body" collapse="isCollapsed">
+                    <div class="btn-group">
+                        <links model="content" ng-repeat="(linkType,link) in content._links track by (linkType + link.href + link[0].href)" link-type="{{linkType}}"/>
+                    </div>
+                    <div hljs source="content._src"></div>
+
+                </div>
+            </div>
+        </tab>
+        <tab heading="Source">
+            <div hljs source="_src"></div>
+        </tab>
+    </tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-info" ng-click="followLocation()" ng-show="location">Follow Location</button>
+    <button class="btn btn-warning" ng-click="close()">Close</button>
+</div>
+
+

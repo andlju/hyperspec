@@ -1,0 +1,25 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title"><a href="" ng-click="isCollapsed = !isCollapsed">Profile: {{model.profile.href}}</a></h4>
+    </div>
+    <div class="panel-body" collapse="isCollapsed">
+        <div class="btn-group">
+            <links model="model" ng-repeat="(linkType,link) in model._links track by (linkType + link.href + link[0].href)" link-type="{{linkType}}"/>
+        </div>
+        <div hljs source="model._src"></div>
+
+        <div class="panel-group">
+            <div class="panel panel-primary" ng-repeat="(name,embedded) in model._embedded">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Embedded {{name}}</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-group">
+                        <resource ng-repeat="res in embedded" model="res">
+                        </resource>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

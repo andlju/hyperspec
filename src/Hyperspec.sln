@@ -36,6 +36,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{4DFA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperspec.WebApi", "Hyperspec.WebApi\Hyperspec.WebApi.csproj", "{EF2E8FF7-F708-4B18-9570-C3216E0CC359}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiBrowser", "ApiBrowser", "{ECE1A9F9-B3CE-48FF-A49C-C1973346F589}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperspec.ApiBrowser", "Hyperspec.ApiBrowser\Hyperspec.ApiBrowser.csproj", "{7B786907-ED39-478E-AEAF-8B4F1AF0FE87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +70,10 @@ Global
 		{EF2E8FF7-F708-4B18-9570-C3216E0CC359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF2E8FF7-F708-4B18-9570-C3216E0CC359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF2E8FF7-F708-4B18-9570-C3216E0CC359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B786907-ED39-478E-AEAF-8B4F1AF0FE87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B786907-ED39-478E-AEAF-8B4F1AF0FE87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B786907-ED39-478E-AEAF-8B4F1AF0FE87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B786907-ED39-478E-AEAF-8B4F1AF0FE87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,5 +82,6 @@ Global
 		{E13364F0-FCB1-40A9-8511-9DF0E7CFD898} = {E1BFAAF0-B7BF-40EE-8B77-D939A7662D97}
 		{F3339064-7B7C-4FFC-844E-0349F9FC187F} = {CBD14121-9273-4594-8A5A-974506FE979F}
 		{4DFA3C89-44B2-44EF-B98E-BD222F005096} = {DC7D7FA6-9E81-4B37-BA6E-AAF1A002D99E}
+		{7B786907-ED39-478E-AEAF-8B4F1AF0FE87} = {ECE1A9F9-B3CE-48FF-A49C-C1973346F589}
 	EndGlobalSection
 EndGlobal

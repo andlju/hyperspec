@@ -9,16 +9,6 @@ using Nancy.TinyIoc;
 
 namespace FriendsApi
 {
-    public class FriendsNancyBootstrapper : DefaultNancyBootstrapper
-    {
-        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
-        {
-            base.ConfigureApplicationContainer(container);
-
-            container.Register<ISerializer, HalNancySerializer>();
-        }
-    }
-
     public class HomeModule : NancyModule
     {
         public HomeModule()

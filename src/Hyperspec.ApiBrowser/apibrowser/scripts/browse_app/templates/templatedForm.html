@@ -1,0 +1,10 @@
+﻿<div>
+    <form role="form">
+        <div class="form-group" ng-repeat="(name, item) in form.template">
+            <label for="{{item.name}}">{{item.title || name}}</label>
+            <input id="{{item.name}}" class="form-control" type="text" ng-model="item.value" />
+        </div>
+        
+        <input type="submit" ng-click="submitForm()" class="btn btn-primary" />
+    </form>
+</div>

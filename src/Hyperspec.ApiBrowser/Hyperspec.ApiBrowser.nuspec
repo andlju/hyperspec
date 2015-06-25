@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>Hyperspec.ApiBrowser</id> 
+    <version>0.2.0</version> 
+    <authors>Anders Ljusberg</authors>
+    <description>Library for specifying HAL content (with support for the Hyperspec _forms extension)</description> 
+    <language>en-US</language>
+    <tags>REST hypermedia HAL</tags>
+  </metadata>
+  <files>
+		<file src="apibrowser\**.*" target="content\apibrowser"/>
+	</files>
+</package>

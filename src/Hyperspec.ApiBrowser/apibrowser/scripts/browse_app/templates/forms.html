@@ -1,0 +1,19 @@
+﻿
+<div class="panel-group">
+    <div class="panel panel-default" ng-repeat="form in forms">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="" ng-click="isVisible = !isVisible">
+                    {{form.title||formType}}
+                </a>
+            </h4>
+            
+        </div>
+        <div class="panel-body" collapse="!isVisible">
+            <templated-form form="form">
+
+            </templated-form>
+        </div>
+    </div>
+</div>
+
