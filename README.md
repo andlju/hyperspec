@@ -2,11 +2,64 @@
 
 This is very much a work-in-progress trying to build a reasonably easy way of creating a hypermedia API in .NET
 
-So far only the combination HAL and Nancy is supported.
+So far only HAL is supported with Nancy or WebAPI as hosts.
+
+## Getting started
+
+Creating your first Hyperspec project is fairly simple. Let's see how it's done when
+hosting with Nancy.
+
+### Create a web, install requisites
+
+Create an ASP.NET Web Application. Choose the Empty template.
+
+Hyperspec works best when Nancy is OWIN hosted, so let's install the following Nuget packages:
+
+```ps
+Install-Package Nancy.Owin
+Install-Package Microsoft.Owin.Host.SystemWeb
+```
+
+Next, we'll install the Hyperspec stuff
+
+```ps
+Install-Package Hyperspec.Hal
+Install-Package Hyperspec.Nancy
+```
+
+As always, you'll need to hook up the Nancy host in an Owin Startup class:
+
+```csharp
+public class Startup
+{
+    public void Configuration(IAppBuilder app)
+    {
+        app.UseNancy();
+    }
+}
+```
+
+And finally enable the Hyperspec serializer in a Nancy Bootstrapper.
+
+```csharp
+public class MyBootstrapper : DefaultNancyBootstrapper
+{
+    protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+    {
+        base.ConfigureApplicationContainer(container);
+
+        container.Register<ISerializer, HalNancySerializer>();
+    }
+}
+```
+
+That's all there is to enabling Hyperspec. Now let's get started building some
+representations!
 
 ## Representations
 
-Hypermedia is handled by either deriving your models from `Representation` or wrapping an existing model in a `Representation<TModel>`:
+Hypermedia is handled by either deriving your models from `Representation` or 
+wrapping an existing model in a `Representation<TModel>`:
 
 ```csharp
 /// <summary>
@@ -40,7 +93,8 @@ public class FriendsRepresentation : Representation
 ```
 
 ## Nancy
-So far, the only thing supported is serializing to Hal and hosting in Nancy. A simple Nancy module could look like this:
+
+A simple Nancy module could look like this:
 
 ```csharp
 public class FriendsModule : NancyModule
