@@ -4,8 +4,8 @@
     browseApp.constant('EVENTS', {        
        Navigation : {
            'Navigate' : 'Navigation.Navigate',
-           'Navigate' : 'Navigation.Navigate',
-           'Dispatch': 'Navigation.Dispatch'
+           'Navigated' : 'Navigation.Navigated',
+           'DispatchForm': 'Navigation.DispatchForm'
        }
     });
 })();

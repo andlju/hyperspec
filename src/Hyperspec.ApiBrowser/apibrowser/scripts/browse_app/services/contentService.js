@@ -28,7 +28,7 @@
             var method = msg.method;
             var data = msg.data;
 
-            if (msg.type === EVENTS.Navigation.Dispatch) {
+            if (msg.type === EVENTS.Navigation.DispatchForm) {
                 method = method || 'POST';
                 $http({
                     method: method,
@@ -55,15 +55,10 @@
 
                     });
 
-                    /*AppEvents.dispatch({
-                        type: EVENTS.Navigation.Navigated,
-                        href: url
-                    });*/
-                    // ContentEvents.dispatch(content);
                 });
             }
 
-            if (msg.type === EVENTS.Navigation.Navigated) {
+            if (msg.type === EVENTS.Navigation.Navigate) {
                 data = null;
                 method = method || 'GET';
                 if (method === 'GET') {
@@ -71,6 +66,7 @@
                 } else {
                     data = msg.data;
                 }
+                console.log("Fetching ", href);
 
                 $http({
                     method: method,
@@ -80,10 +76,10 @@
                     },
                     data: data
                 }).success(function (content, status, headers, config) {
-                    /*AppEvents.dispatch({
+                    AppEvents.dispatch({
                         type: EVENTS.Navigation.Navigated,
                         href: url
-                    });*/
+                    });
                     ContentEvents.dispatch(content);
                 });
 

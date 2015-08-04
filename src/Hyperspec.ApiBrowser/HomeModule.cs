@@ -7,7 +7,7 @@ namespace Hyperspec.ApiBrowser
     {
         public HomeModule()
         {
-            Get["/"] = _ => new RedirectResponse("/apibrowser/#?apiUrl=http:%2F%2Flocalhost:50248%2Fnancy%2Ffriends");
+            Get["/"] = _ => new RedirectResponse("/apibrowser/#?apiUrl=http:%2F%2Flocalhost:1759%2Fapi%2Fplanets");
         } 
     }
 }
