@@ -16,7 +16,7 @@
                     }
                     
                     AppEvents.dispatch({
-                        type: EVENTS.Navigation.Dispatch,
+                        type: EVENTS.Navigation.DispatchForm,
                         href: $scope.form.href,
                         method: $scope.form.method,
                         data: values
