@@ -216,6 +216,8 @@ namespace Hyperspec
             var props = templateType.GetProperties();
             foreach (var property in props)
             {
+                if (!property.CanWrite)
+                    continue;
 
                 var type = property.PropertyType;
                 string typeName = null;

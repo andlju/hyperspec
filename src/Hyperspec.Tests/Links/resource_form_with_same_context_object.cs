@@ -17,6 +17,12 @@ namespace Hyperspec.Tests.Links
         public int ExtraInt { get; set; }
     }
 
+    public class MyTestClassWithReadOnlyProperty
+    {
+        public string TestString { get; set; }
+        public string TestReadOnlyString { get { return TestString; } }
+    }
+
     public class resource_form_with_same_context_object : TestBase
     {
         protected IForm ResourceForm;
@@ -56,5 +62,35 @@ namespace Hyperspec.Tests.Links
             Assert.Equal("AnExtraString", formParams["ExtraString"].DefaultValue);
             Assert.Equal("1337", formParams["ExtraInt"].DefaultValue);
         }
+    }
+
+    public class resource_form_with_context_object_with_readonly_property : TestBase
+    {
+        protected IForm ResourceForm;
+        protected string LinkTemplate;
+
+        protected override void Given()
+        {
+            LinkTemplate = "/test";
+            var testObj = new MyTestClassWithReadOnlyProperty()
+            {
+                TestString = "ATestString"
+            };
+            ResourceForm = new ResourceForm<MyTestClassWithReadOnlyProperty>(LinkTemplate, new[] { new ContentContext(testObj) });
+        }
+
+        protected override void When()
+        {
+            
+        }
+
+        [Fact]
+        public void then_form_parameters_are_correct()
+        {
+            var formParams = ResourceForm.Template;
+            Assert.Equal(1, formParams.Count);
+            Assert.Equal("ATestString", formParams["TestString"].DefaultValue);
+        }
+
     }
 }
