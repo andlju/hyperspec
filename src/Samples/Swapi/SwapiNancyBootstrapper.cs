@@ -1,7 +1,9 @@
 ﻿using Hyperspec.Nancy;
 using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Responses.Negotiation;
 using Nancy.TinyIoc;
+using Swapi.Api;
 
 namespace Swapi
 {
@@ -20,9 +22,22 @@ namespace Swapi
             pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
             {
                 ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
-                            .WithHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE")
-                            .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type");
+                    .WithHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE")
+                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type");
+            });
+            pipelines.OnError.AddItemToEndOfPipeline((ctx, ex) =>
+            {
+                var negotiator = new Negotiator(context);
+                negotiator.WithModel(new ErrorRepresentation()
+                {
+                    Message = "Broken"
+                })
+                    .WithHeader("Access-Control-Allow-Origin", "*")
+                    .WithHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE")
+                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type")
+                    .WithStatusCode(HttpStatusCode.InternalServerError);
 
+                return negotiator;
             });
         }
     }

@@ -37,25 +37,34 @@
                         'Accept': 'application/hal+json'
                     },
                     data: data
-                }).success(function (content, status, headers, config) {
+                }).then(function(responseconfig) {
 
-                    $modal.open({
-                        templateUrl: './scripts/browse_app/templates/dispatchResult.html',
-                        controller: 'ResourcePopupCtrl',
-                        resolve: {
-                            response: function () { return { content: content, status: status, headers : headers }; }
-                        }
-                    }).result.then(function(result) {
+                        $modal.open({
+                            templateUrl: './scripts/browse_app/templates/dispatchResult.html',
+                            controller: 'ResourcePopupCtrl',
+                            resolve: {
+                                response: function () { return response; }
+                            }
+                        }).result.then(function(result) {
 
-                        console.log(result);
-                        AppEvents.dispatch({
-                            type: EVENTS.Navigation.Navigate,
-                            href: result
+                            console.log(result);
+                            AppEvents.dispatch({
+                                type: EVENTS.Navigation.Navigate,
+                                href: result
+                            });
+
                         });
 
+                    },
+                    function(response) {
+                        $modal.open({
+                            templateUrl: './scripts/browse_app/templates/dispatchResult.html',
+                            controller: 'ResourcePopupCtrl',
+                            resolve: {
+                                response: function () { return response; }
+                            }
+                        });
                     });
-
-                });
             }
 
             if (msg.type === EVENTS.Navigation.Navigate) {
@@ -75,17 +84,25 @@
                         'Accept': 'application/hal+json'
                     },
                     data: data
-                }).success(function (content, status, headers, config) {
-                    AppEvents.dispatch({
-                        type: EVENTS.Navigation.Navigated,
-                        href: url
+                }).then(function(response) {
+                        AppEvents.dispatch({
+                            type: EVENTS.Navigation.Navigated,
+                            href: url
+                        });
+                        ContentEvents.dispatch(response.data);
+                    },
+                    function(response) {
+                        $modal.open({
+                            templateUrl: './scripts/browse_app/templates/dispatchResult.html',
+                            controller: 'ResourcePopupCtrl',
+                            resolve: {
+                                response: function() { return response; }
+                            }
+                        });
                     });
-                    ContentEvents.dispatch(content);
-                });
 
             }
         });
-        
 
         return {};
     }]);
@@ -112,12 +129,16 @@
             }
             return JSON.stringify(raw, null, 2);
         };
-
-        $scope._src = JSON.stringify(response.content, null, 2);
-        decorateModel(response.content);
-        $scope.content = response.content;
+        if (!response.data) {
+            response.data = {};
+        }
+        $scope._src = JSON.stringify(response.data, null, 2);
+        decorateModel(response.data);
+        $scope.content = response.data;
         $scope.status = response.status;
-        $scope.location = response.headers('Location');
+        if (response.headers) {
+            $scope.location = response.headers('Location');
+        }
 
         $scope.followLocation = function () {
             $modalInstance.close($scope.location);
