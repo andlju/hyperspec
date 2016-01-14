@@ -25,6 +25,9 @@ namespace Hyperspec.Hal
             foreach (var contentContext in halResource.GetContent())
             {
                 var content = contentContext.Content;
+                if (content == null)
+                    continue; // Don't ever try to serialize a null object
+
                 var contentObj = JObject.FromObject(content, _objectSerializer);
                 foreach (JProperty prop in contentObj.Children())
                 {
