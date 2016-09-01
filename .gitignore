@@ -41,6 +41,7 @@ local.properties
 *.user
 *.sln.docstates
 *.ide
+.vs/
 
 # Build results
 [Bb]uild[Aa]rtifacts/
