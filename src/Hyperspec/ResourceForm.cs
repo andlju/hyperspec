@@ -9,7 +9,7 @@ namespace Hyperspec
 
         // TODO Allow overridden template parameter infos
         public ResourceForm(string linkTemplate, IEnumerable<IContentContext> contexts, string title = null, string method = "POST") : 
-            base(linkTemplate, contexts, title, new TemplateParameterInfo[0])
+            base(linkTemplate, contexts, title, null)
         {
             _method = method;
         }

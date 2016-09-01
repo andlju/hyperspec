@@ -215,7 +215,7 @@ namespace Hyperspec
         {
             var templateType = typeof(TTemplate);
             var props = templateType.GetProperties();
-            var overriddenParametersArray = overriddenParameters as TemplateParameterInfo[] ?? overriddenParameters.ToArray();
+            var overriddenParametersArray = overriddenParameters as TemplateParameterInfo[] ?? overriddenParameters?.ToArray();
 
             foreach (var property in props)
             {
@@ -223,8 +223,8 @@ namespace Hyperspec
                     continue;
 
                 var propertyName = property.Name;
-
-                if (overriddenParametersArray.Any(p => p.Name == propertyName))
+                
+                if (overriddenParametersArray != null && overriddenParametersArray.Any(p => p.Name == propertyName))
                     continue;
 
                 var type = property.PropertyType;
@@ -258,9 +258,12 @@ namespace Hyperspec
                     Title = title
                 };
             }
-            foreach (var parameterInfo in overriddenParametersArray)
+            if (overriddenParametersArray != null)
             {
-                yield return parameterInfo;
+                foreach (var parameterInfo in overriddenParametersArray)
+                {
+                    yield return parameterInfo;
+                }
             }
         }
 
