@@ -18,7 +18,7 @@ namespace Hyperspec
             Links = new Dictionary<string, IList<ILink>>();
         }
 
-        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt = null, object content = null)
+        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt = null, object content = null, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
         {
             var contexts = _contexts;
             if (content != null)
@@ -26,7 +26,7 @@ namespace Hyperspec
 
             linkTemplate = RebaseLink(linkTemplate);
 
-            ILink link = new ResourceLink<TTemplate>(linkTemplate, contexts, prompt);
+            ILink link = new ResourceLink<TTemplate>(linkTemplate, contexts, prompt, parameterInfos);
 
             AddNamedLink(linkName, link);
         }
@@ -42,7 +42,7 @@ namespace Hyperspec
             return linkTemplate;
         }
 
-        public void AddLink(string linkName, string linkTemplate, string prompt = null, object content = null)
+        public void AddLink(string linkName, string linkTemplate, string prompt = null, object content = null, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
         {
             var contexts = _contexts;
             if (content != null)
@@ -50,7 +50,7 @@ namespace Hyperspec
 
             linkTemplate = RebaseLink(linkTemplate);
             
-            ILink link = new ResourceLink(linkTemplate, contexts, prompt);
+            ILink link = new ResourceLink(linkTemplate, contexts, prompt, parameterInfos);
 
             AddNamedLink(linkName, link);
         }

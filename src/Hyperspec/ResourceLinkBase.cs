@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using Resta.UriTemplates;
 
@@ -204,19 +205,26 @@ namespace Hyperspec
     /// <typeparam name="TTemplate"></typeparam>
     public abstract class ResourceLinkBase<TTemplate> : ResourceLinkBase
     {
-        protected ResourceLinkBase(string linkTemplate, IEnumerable<IContentContext> contexts, string title) : 
-            base(linkTemplate, contexts, title, GetParameterInfos())
+        protected ResourceLinkBase(string linkTemplate, IEnumerable<IContentContext> contexts, string title, IEnumerable<TemplateParameterInfo> parameterInfos) : 
+            base(linkTemplate, contexts, title, GetParameterInfos(parameterInfos))
         {
 
         }
 
-        private static IEnumerable<TemplateParameterInfo> GetParameterInfos()
+        private static IEnumerable<TemplateParameterInfo> GetParameterInfos(IEnumerable<TemplateParameterInfo> overriddenParameters)
         {
             var templateType = typeof(TTemplate);
             var props = templateType.GetProperties();
+            var overriddenParametersArray = overriddenParameters as TemplateParameterInfo[] ?? overriddenParameters.ToArray();
+
             foreach (var property in props)
             {
                 if (!property.CanWrite)
+                    continue;
+
+                var propertyName = property.Name;
+
+                if (overriddenParametersArray.Any(p => p.Name == propertyName))
                     continue;
 
                 var type = property.PropertyType;
@@ -244,13 +252,18 @@ namespace Hyperspec
                 }
                 yield return new TemplateParameterInfo()
                 {
-                    Name = property.Name,
+                    Name = propertyName,
                     Type = typeName,
                     IsRequired = isRequired,
                     Title = title
                 };
             }
+            foreach (var parameterInfo in overriddenParametersArray)
+            {
+                yield return parameterInfo;
+            }
         }
+
         private static string GetTypeName(Type type)
         {
             if (type.IsArray)
