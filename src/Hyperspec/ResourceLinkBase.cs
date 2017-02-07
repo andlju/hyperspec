@@ -152,12 +152,15 @@ namespace Hyperspec
                 var prop = contextType.GetProperty(paramName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
                 if (prop != null)
                 {
-                    // Get the value of the property
-                    val = prop.GetValue(content);
-                    if (context.IncludeProperty(paramName, val))
+                    // Get the value of the property if possible
+                    if (prop.CanRead)
                     {
-                        // Found the value, no need to check any more context objects
-                        break;
+                        val = prop.GetValue(content);
+                        if (context.IncludeProperty(paramName, val))
+                        {
+                            // Found the value, no need to check any more context objects
+                            break;
+                        }
                     }
 
                     // Found a value but not supposed to use it. Let's reset and try the next context object

@@ -20,44 +20,53 @@ namespace Hyperspec.Hal
         {
             var halResource = (Representation)value;
             
-            JObject obj = new JObject();
-
-            foreach (var contentContext in halResource.GetContent())
+            try
             {
-                var content = contentContext.Content;
-                if (content == null)
-                    continue; // Don't ever try to serialize a null object
-
-                var contentObj = JObject.FromObject(content, _objectSerializer);
-                foreach (JProperty prop in contentObj.Children())
+                JObject obj = new JObject();
+                foreach (var contentContext in halResource.GetContent())
                 {
-                    if (contentContext.IncludeProperty(prop.Name, prop.Value))
+                    var content = contentContext.Content;
+                    if (content == null)
+                        continue; // Don't ever try to serialize a null object
+
+                    var contentObj = JObject.FromObject(content, _objectSerializer);
+                    foreach (JProperty prop in contentObj.Children())
                     {
-                        obj[prop.Name] = prop.Value;
+                        if (contentContext.IncludeProperty(prop.Name, prop.Value))
+                        {
+                            obj[prop.Name] = prop.Value;
+                        }
                     }
                 }
-            }
 
-            var embedded = halResource.GetEmbedded();
-            if (embedded != null && embedded.Count > 0)
+                var embedded = halResource.GetEmbedded();
+                if (embedded != null && embedded.Count > 0)
+                {
+                    obj.Add("_embedded", JObject.FromObject(embedded, serializer));
+                }
+
+                var linkBase = _linkBaseFunc();
+
+                var links = halResource.GetLinks(linkBase);
+                if (links != null && links.Count > 0)
+                {
+                    obj.Add("_links", JObject.FromObject(links, serializer));
+                }
+                var forms = halResource.GetForms(linkBase);
+                if (forms != null && forms.Count > 0)
+                {
+                    obj.Add("_forms", JObject.FromObject(forms, serializer));
+                }
+
+                obj.WriteTo(writer);
+            }
+            catch (Exception ex)
             {
-                obj.Add("_embedded", JObject.FromObject(embedded, serializer));
+                // If there is an error during serialization, let's report it
+                JObject errorObj = JObject.FromObject(
+                    new {code = ex.Message.GetHashCode(), message=ex.ToString()});
+                errorObj.WriteTo(writer);
             }
-
-            var linkBase = _linkBaseFunc();
-
-            var links = halResource.GetLinks(linkBase);
-            if (links != null && links.Count > 0)
-            {
-                obj.Add("_links", JObject.FromObject(links, serializer));
-            }
-            var forms = halResource.GetForms(linkBase);
-            if (forms != null && forms.Count > 0)
-            {
-                obj.Add("_forms", JObject.FromObject(forms, serializer));
-            }
-
-            obj.WriteTo(writer);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
