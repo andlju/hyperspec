@@ -18,15 +18,54 @@ namespace Hyperspec
             Links = new Dictionary<string, IList<ILink>>();
         }
 
-        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt = null, object content = null, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt = null)
         {
-            var contexts = _contexts;
-            if (content != null)
-                contexts = new[] { new ContentContext(content) }.Concat(_contexts);
+            AddLink<TTemplate>(linkName, linkTemplate, prompt, new object[0]);
+        }
+
+        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt, object context,
+            IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+        {
+            AddLink<TTemplate>(linkName, linkTemplate, prompt, new[] {context}, parameterInfos);
+        }
+
+        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt, IEnumerable<object> contexts, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+        {
+            var linkContexts = _contexts;
+            if (contexts != null)
+            {
+                linkContexts = contexts.Select(c => new ContentContext(c)).Concat(_contexts);
+            }
 
             linkTemplate = RebaseLink(linkTemplate);
 
-            ILink link = new ResourceLink<TTemplate>(linkTemplate, contexts, prompt, parameterInfos);
+            ILink link = new ResourceLink<TTemplate>(linkTemplate, linkContexts, prompt, parameterInfos);
+
+            AddNamedLink(linkName, link);
+        }
+
+        public void AddLink(string linkName, string linkTemplate, string prompt = null)
+        {
+            AddLink(linkName, linkTemplate, prompt, new object[0]);
+        }
+
+        public void AddLink(string linkName, string linkTemplate, string prompt, object context,
+            IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+        {
+            AddLink(linkName, linkTemplate, prompt, new[] { context }, parameterInfos);
+        }
+
+        public void AddLink(string linkName, string linkTemplate, string prompt, IEnumerable<object> contexts, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+        {
+            var linkContexts = _contexts;
+            if (contexts != null)
+            {
+                linkContexts = contexts.Select(c => new ContentContext(c)).Concat(_contexts);
+            }
+
+            linkTemplate = RebaseLink(linkTemplate);
+            
+            ILink link = new ResourceLink(linkTemplate, linkContexts, prompt, parameterInfos);
 
             AddNamedLink(linkName, link);
         }
@@ -40,19 +79,6 @@ namespace Hyperspec
                 linkTemplate = _linkBase + linkTemplate;
             }
             return linkTemplate;
-        }
-
-        public void AddLink(string linkName, string linkTemplate, string prompt = null, object content = null, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
-        {
-            var contexts = _contexts;
-            if (content != null)
-                contexts = new[] { new ContentContext(content) }.Concat(_contexts);
-
-            linkTemplate = RebaseLink(linkTemplate);
-            
-            ILink link = new ResourceLink(linkTemplate, contexts, prompt, parameterInfos);
-
-            AddNamedLink(linkName, link);
         }
 
         public void AddSelfLink<TTemplate>(string linkTemplate)
