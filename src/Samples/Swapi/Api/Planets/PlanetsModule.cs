@@ -1,4 +1,7 @@
-﻿using Nancy;
+﻿using Hyperspec.Nancy;
+using Nancy;
+using Nancy.Responses;
+using Nancy.Responses.Negotiation;
 
 namespace Swapi.Api.Planets
 {

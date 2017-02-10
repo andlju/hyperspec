@@ -21,21 +21,11 @@ namespace Hyperspec
 
         public string Method { get { return _method; } }
 
-        public IDictionary<string, FormParameterInfo> Template
+        public override IDictionary<string, FormParameterInfo> Template
         {
             get { return GetTemplate(); }
         }
 
-        private IDictionary<string, FormParameterInfo> GetTemplate()
-        {
-            return ParameterInfos.Values.Where(pi => !pi.InTemplate).ToDictionary(pi => pi.Name, pi => new FormParameterInfo()
-            {
-                Title = pi.Title,
-                Type = pi.Type,
-                IsRequired = pi.IsRequired,
-                DefaultValue = GetParameter(Contexts, pi.Name).FirstOrDefault()
-            });
-        }
     }
 
     public class ResourceForm : ResourceLinkBase, IForm
@@ -56,20 +46,9 @@ namespace Hyperspec
 
         public string Method { get { return _method; } }
 
-        public IDictionary<string, FormParameterInfo> Template
+        public override IDictionary<string, FormParameterInfo> Template
         {
             get { return GetTemplate(); }
-        }
-
-        private IDictionary<string, FormParameterInfo> GetTemplate()
-        {
-            return ParameterInfos.Values.Where(pi => !pi.InTemplate).ToDictionary(pi => pi.Name, pi => new FormParameterInfo()
-            {
-                Title = pi.Title,
-                Type = pi.Type,
-                IsRequired = pi.IsRequired,
-                DefaultValue = GetParameter(Contexts, pi.Name).FirstOrDefault()
-            });
         }
     }
 

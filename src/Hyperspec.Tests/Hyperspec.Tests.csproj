@@ -59,11 +59,14 @@
     <Compile Include="Links\resource_form_with_context_object_with_readonly_property.cs" />
     <Compile Include="Links\resource_form_with_no_template.cs" />
     <Compile Include="Links\resource_form_with_same_context_object.cs" />
+    <Compile Include="Links\resource_link_with_context_object_and_one_property_not_included.cs" />
     <Compile Include="Links\resource_link_with_dictionary_context_object.cs" />
     <Compile Include="Links\resource_link_with_no_context_and_no_template.cs" />
     <Compile Include="Links\resource_link_with_other_context_object.cs" />
     <Compile Include="Links\resource_link_with_same_context_object.cs" />
     <Compile Include="Links\resource_link_with_same_context_object_and_automatic_querystring.cs" />
+    <Compile Include="Links\resource_link_with_same_context_object_and_null_query.cs" />
+    <Compile Include="Links\resource_link_with_same_context_object_and_null_value_in_query.cs" />
     <Compile Include="Links\resource_link_with_specified_templateparameterinfo.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

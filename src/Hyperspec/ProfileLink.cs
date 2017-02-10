@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Hyperspec
 {
     public class ProfileLink : ILink
@@ -9,7 +11,10 @@ namespace Hyperspec
             _href = href;
         }
 
-        public string Href { get { return _href; } }
-        public string Title { get { return null; } }
+        public string Href => _href;
+
+        public string Title => null;
+
+        public IDictionary<string, FormParameterInfo> Template => null;
     }
 }

@@ -15,7 +15,7 @@ namespace Hyperspec.Tests.Links
                 TestString = "ATestString",
                 TestId = new Guid("8babe164-fa02-47f0-b4e5-92bdc972ff01")
             };
-            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { new ContentContext(testObj),  });
+            Link = new ResourceLink<MyExtendedTestClass>(LinkTemplate, new[] { new ContentContext(testObj),  }, "test");
         }
 
         protected override void When()

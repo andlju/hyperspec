@@ -9,7 +9,7 @@ namespace Hyperspec.Tests.Links
         protected override void Given()
         {
             LinkTemplate = "/test/something";
-            Link = new ResourceLink(LinkTemplate, null);
+            Link = new ResourceLink(LinkTemplate, null, "test");
         }
 
         protected override void When()

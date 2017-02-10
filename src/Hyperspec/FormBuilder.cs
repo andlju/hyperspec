@@ -17,38 +17,58 @@ namespace Hyperspec
             Forms = new Dictionary<string, IList<IForm>>();
         }
 
-        public void AddForm<TTemplate>(string formName, string linkTemplate, string prompt = null, string method = "POST", object context = null)
+        public void AddForm(string formName, string linkTemplate, string prompt, string method, object context)
         {
-            IList<IForm> formList;
-            if (!Forms.TryGetValue(formName, out formList))
-            {
-                formList = new List<IForm>();
-                Forms.Add(formName, formList);
-            }
-            var contexts = _contexts;
-            if (context != null)
-                contexts = new[] { new ContentContext(context) }.Concat(_contexts);
-
-            linkTemplate = RebaseLink(linkTemplate);
-
-            formList.Add(new ResourceForm<TTemplate>(linkTemplate, contexts, prompt, method));
+            AddForm(formName, linkTemplate, prompt, method, new[] {context});
         }
 
-        public void AddForm(string formName, string linkTemplate, string prompt = null, string method = "POST", object context = null)
+        public void AddForm<TTemplate>(string formName, string linkTemplate, string prompt, string method, IEnumerable<object> contexts)
         {
+            if (string.IsNullOrEmpty(method))
+                method = "POST";
+
             IList<IForm> formList;
             if (!Forms.TryGetValue(formName, out formList))
             {
                 formList = new List<IForm>();
                 Forms.Add(formName, formList);
             }
-            var contexts = _contexts;
-            if (context != null)
-                contexts = new[] { new ContentContext(context) }.Concat(_contexts);
+            var formContexts = _contexts;
+            if (contexts != null)
+            {
+                formContexts = contexts.Select(c => new ContentContext(c)).Concat(_contexts);
+            }
 
             linkTemplate = RebaseLink(linkTemplate);
 
-            formList.Add(new ResourceForm(linkTemplate, contexts, prompt, method));
+            formList.Add(new ResourceForm<TTemplate>(linkTemplate, formContexts, prompt, method));
+        }
+
+        public void AddForm(string formName, string linkTemplate, string prompt, string method, IEnumerable<object> contexts)
+        {
+            if (string.IsNullOrEmpty(method))
+                method = "POST";
+
+            IList<IForm> formList;
+            if (!Forms.TryGetValue(formName, out formList))
+            {
+                formList = new List<IForm>();
+                Forms.Add(formName, formList);
+            }
+            var formContexts = _contexts;
+            if (contexts != null)
+            {
+                formContexts = contexts.Select(c => new ContentContext(c)).Concat(_contexts);
+            }
+
+            linkTemplate = RebaseLink(linkTemplate);
+
+            formList.Add(new ResourceForm(linkTemplate, formContexts, prompt, method));
+        }
+
+        public void AddForm<TTemplate>(string formName, string linkTemplate, string prompt, string method, object context)
+        {
+            AddForm<TTemplate>(formName, linkTemplate, prompt, method, new[] { context });
         }
 
         private string RebaseLink(string linkTemplate)

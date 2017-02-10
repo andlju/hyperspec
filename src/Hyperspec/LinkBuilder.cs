@@ -24,12 +24,12 @@ namespace Hyperspec
         }
 
         public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt, object context,
-            IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+            IEnumerable<TemplateParameterInfo> parameterInfos = null)
         {
             AddLink<TTemplate>(linkName, linkTemplate, prompt, new[] {context}, parameterInfos);
         }
 
-        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt, IEnumerable<object> contexts, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+        public void AddLink<TTemplate>(string linkName, string linkTemplate, string prompt, IEnumerable<object> contexts, IEnumerable<TemplateParameterInfo> parameterInfos = null)
         {
             var linkContexts = _contexts;
             if (contexts != null)
@@ -39,7 +39,7 @@ namespace Hyperspec
 
             linkTemplate = RebaseLink(linkTemplate);
 
-            ILink link = new ResourceLink<TTemplate>(linkTemplate, linkContexts, prompt, parameterInfos);
+            ILink link = new ResourceLink<TTemplate>(linkTemplate, linkContexts, prompt, parameterInfos != null, parameterInfos);
 
             AddNamedLink(linkName, link);
         }
@@ -50,12 +50,12 @@ namespace Hyperspec
         }
 
         public void AddLink(string linkName, string linkTemplate, string prompt, object context,
-            IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+            IEnumerable<TemplateParameterInfo> parameterInfos = null)
         {
             AddLink(linkName, linkTemplate, prompt, new[] { context }, parameterInfos);
         }
 
-        public void AddLink(string linkName, string linkTemplate, string prompt, IEnumerable<object> contexts, IEnumerable<ResourceLinkBase.TemplateParameterInfo> parameterInfos = null)
+        public void AddLink(string linkName, string linkTemplate, string prompt, IEnumerable<object> contexts, IEnumerable<TemplateParameterInfo> parameterInfos = null)
         {
             var linkContexts = _contexts;
             if (contexts != null)
@@ -65,7 +65,7 @@ namespace Hyperspec
 
             linkTemplate = RebaseLink(linkTemplate);
             
-            ILink link = new ResourceLink(linkTemplate, linkContexts, prompt, parameterInfos);
+            ILink link = new ResourceLink(linkTemplate, linkContexts, prompt, parameterInfos != null, parameterInfos);
 
             AddNamedLink(linkName, link);
         }

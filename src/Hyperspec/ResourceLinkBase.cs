@@ -9,21 +9,22 @@ using System.Reflection;
 using Resta.UriTemplates;
 
 namespace Hyperspec
-{  
+{
+    public class TemplateParameterInfo
+    {
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Type { get; set; }
+        public bool IsRequired { get; set; }
+        public bool InTemplate { get; set; }
+        public bool ForceTemplated { get; set; }
+    }
+
     /// <summary>
     /// Common base class for ResourceLink and ResourceForm. 
     /// </summary>
     public abstract class ResourceLinkBase : ILink
     {
-        public class TemplateParameterInfo
-        {
-            public string Name { get; set; }
-            public string Title { get; set; }
-            public string Type { get; set; }
-            public bool IsRequired { get; set; }
-            public bool InTemplate { get; set; }
-        }
-
         private readonly Dictionary<string, TemplateParameterInfo> _parameterInfos;
 
         private readonly UriTemplate _originalUriTemplate;
@@ -71,6 +72,7 @@ namespace Hyperspec
         public virtual string Title { get { return _title; } }
 
         public abstract string Href { get; }
+        public abstract IDictionary<string, FormParameterInfo> Template { get; }
 
         protected IDictionary<string, TemplateParameterInfo> ParameterInfos
         {
@@ -83,10 +85,10 @@ namespace Hyperspec
             var linkParts = GetParameters();
 
             var templateResolver = template.GetResolver();
-            foreach (var part in linkParts)
+            foreach (var part in linkParts.Where(p => !p.ForceTemplated)) // Don't resolve parameters that have been forced as templated
             {
                 var value = GetParameter(Contexts, part.Name);
-
+    
                 if (value.Any())
                 {
                     templateResolver.Bind(part.Name, value);
@@ -199,6 +201,17 @@ namespace Hyperspec
             }
 
             yield return val.ToString();
+        }
+
+        protected IDictionary<string, FormParameterInfo> GetTemplate()
+        {
+            return ParameterInfos.Values.Where(pi => !pi.InTemplate).ToDictionary(pi => pi.Name, pi => new FormParameterInfo()
+            {
+                Title = pi.Title,
+                Type = pi.Type,
+                IsRequired = pi.IsRequired,
+                DefaultValue = GetParameter(Contexts, pi.Name).FirstOrDefault()
+            });
         }
     }
 
