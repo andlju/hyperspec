@@ -15,7 +15,8 @@
                     $scope.forms = tmpForms;
                     $scope.form = tmpForms[0]; // First form
                 } else {
-                    $scope.forms = tmpForms;
+                    $scope.forms = [tmpForms];
+                    $scope.form = tmpForms; // First form
                 }
             }],
             templateUrl: './scripts/browse_app/templates/forms.html',

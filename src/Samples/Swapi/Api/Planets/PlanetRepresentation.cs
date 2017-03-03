@@ -6,12 +6,6 @@ using Swapi.Model;
 
 namespace Swapi.Api.Planets
 {
-    public class PlanetQueryRequest
-    {
-        public string Climate { get; set; }
-        public string Terrain { get; set; }
-        public string Gravity { get; set; }
-    }
 
     public class PlanetRepresentation : Representation<Planet>
     {
@@ -22,8 +16,7 @@ namespace Swapi.Api.Planets
 
         protected override void AddLinks(ILinkBuilder linkBuilder)
         {
-            base.AddLinks(linkBuilder);
-            linkBuilder.AddLink<PlanetQueryRequest>("similar", PlanetLinks.Planets, "Find similar planets",null, new List<TemplateParameterInfo>()
+            linkBuilder.AddLink<PlanetSearchRequest>("similar", PlanetLinks.Planets, "Find similar planets",null, new List<TemplateParameterInfo>()
             {
                 new TemplateParameterInfo()
                 {
@@ -31,6 +24,12 @@ namespace Swapi.Api.Planets
                     ForceTemplated = true
                 }
             });
+        }
+
+        protected override void AddForms(IFormBuilder formBuilder)
+        {
+            formBuilder.AddForm<InvestigatePlanetCommand>("command", PlanetLinks.InvestigateCommand, "Investigate Planet", "POST", null);
+            formBuilder.AddForm<DestroyPlanetCommand>("command", PlanetLinks.DestroyCommand, "Destroy Planet", "POST", null);
         }
     }
 }

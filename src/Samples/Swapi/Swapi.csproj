@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,7 +98,10 @@
     <Compile Include="Api\Planets\PlanetsModule.cs" />
     <Compile Include="Api\Planets\PlanetsRepresentation.cs" />
     <Compile Include="IPlanetsService.cs" />
+    <Compile Include="Model\DestroyPlanetCommand.cs" />
+    <Compile Include="Model\InvestigatePlanetCommand.cs" />
     <Compile Include="Model\Planet.cs" />
+    <Compile Include="Model\PlanetSearchRequest.cs" />
     <Compile Include="PlanetsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
