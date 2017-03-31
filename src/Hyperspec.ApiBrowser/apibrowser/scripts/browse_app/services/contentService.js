@@ -37,7 +37,7 @@
                         'Accept': 'application/hal+json'
                     },
                     data: data
-                }).then(function(responseconfig) {
+                }).then(function(response) {
 
                         $modal.open({
                             templateUrl: './scripts/browse_app/templates/dispatchResult.html',
