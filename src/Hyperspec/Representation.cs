@@ -187,8 +187,8 @@ namespace Hyperspec
         /// <returns></returns>
         public override IEnumerable<IContentContext> GetContent()
         {
-            yield return new ContentContext(this, IncludeProperty);
             yield return new ContentContext(Content, IncludeProperty);
+            yield return new ContentContext(this, IncludeProperty);
         }
     }
 }
