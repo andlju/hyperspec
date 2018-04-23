@@ -14,7 +14,7 @@ Import-Module "$scriptDir\BuildBootstrap.psm1"
 
 # Import the psake module
 $psakeFolder = Get-LatestPackageFolder("psake")
-$psakeModulePath = "$psakeFolder\tools\psake.psm1"
+$psakeModulePath = "$psakeFolder\tools\psake\psake.psm1"
 
 import-module $psakeModulePath
 
