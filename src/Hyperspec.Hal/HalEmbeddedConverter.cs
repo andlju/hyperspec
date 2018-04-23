@@ -9,13 +9,28 @@ namespace Hyperspec.Hal
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var embedded = ((IEnumerable<Representation>)value).ToArray();
-            writer.WriteStartArray();
-            foreach (var item in embedded)
+            var embedded = (Embedded)value;
+            if (embedded.Single)
             {
-                serializer.Serialize(writer, item);
+                var singleItem = embedded.GetEmbedded().FirstOrDefault();
+                if (singleItem != null)
+                {
+                    serializer.Serialize(writer, singleItem);
+                }
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteStartArray();
+                var items = embedded.GetEmbedded();
+                if (items != null)
+                {
+                    foreach (var item in items)
+                    {
+                        serializer.Serialize(writer, item);
+                    }
+                }
+                writer.WriteEndArray();
+            }
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -25,7 +40,7 @@ namespace Hyperspec.Hal
 
         public override bool CanConvert(Type objectType)
         {
-            return (typeof(IEnumerable<Representation>).IsAssignableFrom(objectType));
+            return (typeof(Embedded).IsAssignableFrom(objectType));
         }
     }
 }

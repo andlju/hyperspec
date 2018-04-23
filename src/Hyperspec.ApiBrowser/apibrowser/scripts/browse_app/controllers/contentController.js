@@ -18,6 +18,10 @@
         var decorateModel = function (model) {
             model._src = getRawJson(model, false);
             for (var embeddedName in model._embedded) {
+
+                if (!Array.isArray(model._embedded[embeddedName])) {
+                    model._embedded[embeddedName] = [model._embedded[embeddedName]];
+                }
                 for (var i = 0; i < model._embedded[embeddedName].length; i++) {
                     var childModel = model._embedded[embeddedName][i];
                     decorateModel(childModel);

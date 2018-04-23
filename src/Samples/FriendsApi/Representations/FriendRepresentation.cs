@@ -1,4 +1,5 @@
-﻿using FriendsApi.Models;
+﻿using System.Collections.Generic;
+using FriendsApi.Models;
 using Hyperspec;
 
 namespace FriendsApi.Representations
@@ -11,6 +12,10 @@ namespace FriendsApi.Representations
         public FriendRepresentation(Friend content) 
             : base(content, FriendsLinks.Friend, "frapi:friend")
         {
+            if (content.Workplace != null)
+            {
+                EmbedResource("workplace", new CompanyRepresentation(content.Workplace), true);
+            }
         }
 
         // The self link is added automatically
@@ -18,6 +23,11 @@ namespace FriendsApi.Representations
         {
             linkBuilder.AddLink("image", FriendsLinks.Image, prompt: "Image");
             linkBuilder.AddLink("blog", Content.Blog, prompt: "Blog");
+        }
+
+        protected override IEnumerable<string> PropertiesToIgnore()
+        {
+            yield return "Workplace";
         }
     }
 }

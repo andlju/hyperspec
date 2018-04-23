@@ -20,7 +20,12 @@ namespace FriendsApi.Modules
                 {
                     FullName = "Anders Ljusberg",
                     Slug = "anderslj",
-                    Blog = "http://coding-insomnia.com"
+                    Blog = "http://coding-insomnia.com",
+                    Workplace = new Company()
+                    {
+                        Name = "Aptitud",
+                        Web = "https://aptitud.se"
+                    }
                 };
                 var friend2 = new Friend()
                 {

@@ -7,11 +7,34 @@ using System.Threading.Tasks;
 
 namespace Hyperspec
 {
+    public class Embedded
+    {
+        public Embedded(bool single)
+        {
+            Single = single;
+        }
+
+        private readonly IList<Representation> _resources = new List<Representation>();
+        public bool Single { get; }
+
+        public IEnumerable<Representation> GetEmbedded()
+        {
+            return _resources;
+        }
+
+        public void AddResource(Representation representation)
+        {
+            if (Single && _resources.Any())
+                throw new InvalidOperationException("Embeddeds marked as single can only add one resource");
+            _resources.Add(representation);
+        }
+    }
+
     public abstract class Representation
     {
         private readonly string _selfTemplate;
         private readonly string _profileHref;
-        private readonly IDictionary<string, IList<Representation>> _embeddedResources = new Dictionary<string, IList<Representation>>();
+        private readonly IDictionary<string, Embedded> _embeddedResources = new Dictionary<string, Embedded>();
 
         protected Representation(string selfTemplate = null, string profileHref = null)
         {
@@ -23,14 +46,19 @@ namespace Hyperspec
 
         public void EmbedResource(string name, Representation representation)
         {
-            IList<Representation> resourceList;
-            if (!_embeddedResources.TryGetValue(name, out resourceList))
+            EmbedResource(name, representation, false);
+        }
+
+        public void EmbedResource(string name, Representation representation, bool single)
+        {
+            Embedded embedded;
+            if (!_embeddedResources.TryGetValue(name, out embedded))
             {
-                resourceList = new List<Representation>();
-                _embeddedResources.Add(name, resourceList);
+                embedded = new Embedded(single);
+                _embeddedResources.Add(name, embedded);
             }
             representation.Parent = this;
-            resourceList.Add(representation);
+            embedded.AddResource(representation);
         }
 
         protected virtual IEnumerable<string> PropertiesToIgnore()
@@ -103,7 +131,7 @@ namespace Hyperspec
         /// </summary>
         /// <remarks>Used when serializing</remarks>
         /// <returns></returns>
-        public IDictionary<string, IList<Representation>> GetEmbedded()
+        public IDictionary<string, Embedded> GetEmbedded()
         {
             return _embeddedResources;
         }
