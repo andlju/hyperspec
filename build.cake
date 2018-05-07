@@ -1,23 +1,26 @@
 #tool "nuget:?package=xunit.runner.console"
 #tool "nuget:?package=ReportUnit"
+
+///////////////////////////////////////////////////////////////////////////////
+// BUILD ENVIRONMENT
+///////////////////////////////////////////////////////////////////////////////
+var local = BuildSystem.IsLocalBuild;
+var isRunningOnAppVeyor = AppVeyor.IsRunningOnAppVeyor;
+var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
+
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
-
 var target = Argument<string>("target", "Default");
 var configuration = Argument<string>("configuration", "Release");
 var buildNumber = Argument<int>("buildnumber", 0);
+var preRelease = Argument<bool>("preRelease", local);
 
 ///////////////////////////////////////////////////////////////////////////////
 // PREPARATION
 ///////////////////////////////////////////////////////////////////////////////
 
 var projectName = "Hyperspec";
-
-// Get whether or not this is a local build.
-var local = BuildSystem.IsLocalBuild;
-var isRunningOnAppVeyor = AppVeyor.IsRunningOnAppVeyor;
-var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
 
 // Parse release notes.
 var releaseNotes = ParseReleaseNotes("./ReleaseNotes.md");
@@ -178,7 +181,7 @@ Task("Create-NuGet-Packages")
   .Does(() =>
 {
   var nugetVersion = semanticVersion;
-  if (local) {
+  if (preRelease) {
     nugetVersion = string.Format("{0}-build{1:0000}", nugetVersion, buildNumber);
   }
   var nuspecFiles = GetFiles(sourceDirectory.Path + "/**/*.nuspec");
