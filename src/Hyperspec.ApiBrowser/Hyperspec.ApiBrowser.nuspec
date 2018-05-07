@@ -9,6 +9,6 @@
     <tags>REST hypermedia HAL</tags>
   </metadata>
   <files>
-		<file src="apibrowser\**.*" target="content\apibrowser"/>
+		<file src="..\..\apibrowser\**.*" target="content\apibrowser"/>
 	</files>
 </package>

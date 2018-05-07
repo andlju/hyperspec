@@ -51,6 +51,12 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
+[Oo]utput/
+
+# Cake Build
+[Tt]ools/
+
+
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
